@@ -460,8 +460,9 @@ PlayerSettings:
   XboxOneAllowedProductIds: []
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudServicesEnabled:
+    UNet: 1
+  cloudProjectId: 888be29d-aa53-4918-93a9-b4cbe587b8d5
+  projectName: White_As_Snow
+  organizationId: contractk4
   cloudEnabled: 0
