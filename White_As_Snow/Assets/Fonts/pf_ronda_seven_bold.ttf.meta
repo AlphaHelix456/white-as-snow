@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 7c43f155db28e694ea0656b586950ecd
+timeCreated: 1486081962
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: PF Ronda Seven
+  fontNames:
+  - PF Ronda Seven
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2ebab75367929ac41a681f7fc9b91ba9, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

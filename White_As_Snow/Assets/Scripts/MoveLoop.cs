@@ -18,7 +18,6 @@ public class MoveLoop : MonoBehaviour {
         moveVector = Vector3.left * speed;
         camHeight = 2f * cam.orthographicSize;
         camWidth = camHeight * cam.aspect;
-        print(camWidth);
         myWidth = (float)GetComponent<RectTransform>().rect.width;
         loopLocation = treeTarget.transform.position;
         

@@ -14,7 +14,7 @@ public class UIRevealer : MonoBehaviour {
     public bool revealOnLoad;
     public bool hideOnLoad;
 
-    private bool debug;
+    private bool debug = true;
     void Start() {
 
 
@@ -67,7 +67,6 @@ public class UIRevealer : MonoBehaviour {
         {
             hideUI();
         }
-        debug = true;  //for testing purposes, remove later
     }
 
     void Update() {
@@ -95,6 +94,7 @@ public class UIRevealer : MonoBehaviour {
     }
     public void moveToLocation(Vector3 target)
     {
+        //moves towards location, snaps to location once close enough
         transform.localPosition += (target - transform.localPosition) * (speedFactor/100f) * (1-Time.deltaTime);
         if (Vector3.Distance(transform.localPosition, target) < 1)
         {
