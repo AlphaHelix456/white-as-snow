@@ -384,7 +384,7 @@ MonoBehaviour:
   origin: {fileID: 1712316855}
   dest: {fileID: 196999015}
   speedFactor: 20
-  debug: 1
+  debug: 0
 --- !u!114 &539485459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   origin: {fileID: 1942301377}
   dest: {fileID: 1167921175}
   speedFactor: 20
-  debug: 1
+  debug: 0
 --- !u!114 &854567894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1252,7 +1252,7 @@ MonoBehaviour:
   origin: {fileID: 1977701226}
   dest: {fileID: 285442281}
   speedFactor: 20
-  debug: 1
+  debug: 0
 --- !u!114 &996809299
 MonoBehaviour:
   m_ObjectHideFlags: 0

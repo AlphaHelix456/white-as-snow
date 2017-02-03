@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour {
     {
         //Runs when start button is pressed; switches to game scene
 
-        //SceneManager.LoadScene(SCENE_NAME);  Uncomment once scene is created
+        SceneManager.LoadScene("Overworld");
     }
     public void quitGame()
     {
