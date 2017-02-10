@@ -27,4 +27,7 @@ public class EnemyCombat
     public float baseSPD;
     public float currentSPD;
 
+    public float baseCRIT;
+    public float currentCRIT;
+
 }
