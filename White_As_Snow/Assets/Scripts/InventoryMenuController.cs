@@ -24,7 +24,7 @@ public class InventoryMenuController : MonoBehaviour
     public string[] itemUseText;
     private int selectedItemID;
     private int selectedItemSlot;
-    private int[] inventory;
+    private Inventory inventory;
 
     private int menuState;
     private const int NOT_IN_MENU = 0;
@@ -40,12 +40,12 @@ public class InventoryMenuController : MonoBehaviour
 	void Start () {
         selectedItemID = 0;
         selectedItemSlot = 0;
-        inventory = new int[8];
+        inventory = new Inventory();
         if (debug)
         {
-            updateInventory(new int[8] { 1, 2, 3, 0, 0, 2, 3, 1 });  //remove later
+            inventory = new Inventory(new int[8] { 1, 2, 3, 0, 0, 2, 3, 1 });  //remove later
         }
-        
+        spriteManager.updateSprites(inventory.toArray());
         menuState = NOT_IN_MENU;
 	}
 	
@@ -69,7 +69,7 @@ public class InventoryMenuController : MonoBehaviour
                     GameObject buttonSelected = eventSystem.currentSelectedGameObject;
                     if (buttonSelected.name != "BackButton")
                     {
-                        itemDesc.GetComponent<Text>().text = itemText[inventory[int.Parse(buttonSelected.name.Substring(3))]];
+                        itemDesc.GetComponent<Text>().text = itemText[inventory.get(int.Parse(buttonSelected.name.Substring(3)))];
                     }
                 }
                 
@@ -99,7 +99,7 @@ public class InventoryMenuController : MonoBehaviour
         itemDesc.SetActive(true);
         selectionMenu.SetActive(false);
         menuState = INVENTORY_PANELS;
-        itemDesc.GetComponent<Text>().text = itemText[inventory[0]];
+        itemDesc.GetComponent<Text>().text = itemText[inventory.get(0)];
 
     }
     public void closeInventory()
@@ -117,7 +117,7 @@ public class InventoryMenuController : MonoBehaviour
     public void itemPress()
     {
         GameObject itemSelected = eventSystem.currentSelectedGameObject;
-        int tempSelectedItemID = inventory[int.Parse(itemSelected.name.Substring(3))]; //only "box[01234567]" will call this function
+        int tempSelectedItemID = inventory.get(int.Parse(itemSelected.name.Substring(3))); //only "box[01234567]" will call this function
                                                                                        //This takes the number on the end and uses it as an index for inventory
                                                                                        //This returns the item ID in that inventory slot
         if(tempSelectedItemID != 0)         //Don't do anything if the inventory slot is an empty slot
@@ -133,7 +133,7 @@ public class InventoryMenuController : MonoBehaviour
     }
     public void optionPress()
     {
-        useItem(selectedItemSlot, int.Parse(eventSystem.currentSelectedGameObject.name.Substring(14)));
+        this.useInventoryItem(selectedItemSlot, int.Parse(eventSystem.currentSelectedGameObject.name.Substring(14)));
         itemDesc.SetActive(true);
         selectionMenu.SetActive(false);
         inventoryPanels[selectedItemSlot].GetComponent<Image>().sprite = emptyImg; //Removes manual white outline and returns to automatic mode for outlines
@@ -153,30 +153,13 @@ public class InventoryMenuController : MonoBehaviour
     }
     public void updateInventory(int[] newInventory)
     {
-        this.inventory = ordered(newInventory);
-        spriteManager.updateSprites(inventory);
+        inventory.updateInventory(newInventory);
+        spriteManager.updateSprites(inventory.toArray());
     }
-    
-    private int[] ordered(int[] newInventory)
-    {
-        //Moves 0's to the end of the array
-        List<int> result = new List<int>(newInventory);
-        for (int i = result.Count - 1; i >= 0; i--)
-        {
-            if (result[i] == 0)
-            {
-                result.RemoveAt(i);
-                result.Add(0);
-            }
-        }
-        return result.ToArray();
-    }
-    private void useItem(int index, int optionSelected) 
-    {
-        /*
-         * Uses item (to be coded), removes it from the inventory, and updates inventory
-         */
-        int itemID = inventory[index];
+    public void useInventoryItem(int itemToUse, int optionSelected)
+    { //Uses item (to be coded), removes it from the inventory, and updates inventory
+
+        int itemID = inventory.get(itemToUse);
         switch (itemID)
         {
             case NO_ITEM:
@@ -190,11 +173,8 @@ public class InventoryMenuController : MonoBehaviour
             default:
                 throw new System.ArgumentException("ITEM_ID NOT VALID ITEM");
         }
-        List<int> newInventory = new List<int>(inventory);
-        newInventory.RemoveAt(index);
-        newInventory.Add(0);
-        updateInventory(ordered(newInventory.ToArray()));
-
-
+        inventory.removeItem(itemToUse);
+        spriteManager.updateSprites(inventory.toArray());
     }
+    
 }

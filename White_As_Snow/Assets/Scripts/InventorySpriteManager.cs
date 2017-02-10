@@ -20,4 +20,5 @@ public class InventorySpriteManager : MonoBehaviour {
             invSquares[i].sprite = itemSprites[newInventory[i]];
         }
     }
+
 }
