@@ -26,20 +26,17 @@ public class WolfMovement : MonoBehaviour {
         else {
             rb.velocity = new Vector2(rb.velocity.x, 0);
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
             rb.velocity = new Vector2(SPEED, rb.velocity.y);
             facingright = true;
             facingup = false;
         }
-        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
             rb.velocity = new Vector2(-SPEED, rb.velocity.y);
             facingright = false;
             facingup = false;
         }
-        else
-        {
+        else {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
     }
