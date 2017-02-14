@@ -26,7 +26,7 @@ public class EnemyStateMachine : MonoBehaviour {
     private bool actionStarted = false;
     public GameObject WolfToAttack;
     //Speed to walk to the target
-    private float animSpeed = 5f;
+    private float animSpeed = 10f;
     
 
     void Start () {

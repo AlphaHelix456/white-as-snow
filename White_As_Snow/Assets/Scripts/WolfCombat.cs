@@ -21,4 +21,7 @@ public class WolfCombat
     public float baseSPD;
     public float currentSPD;
 
+    public float baseCRIT;
+    public float currentCRIT;
+
 }
