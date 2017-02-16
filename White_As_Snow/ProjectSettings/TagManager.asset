@@ -6,6 +6,7 @@ TagManager:
   tags:
   - enemy
   - wolf
+  - Back
   layers:
   - Default
   - TransparentFX

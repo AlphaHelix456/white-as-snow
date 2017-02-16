@@ -60,5 +60,16 @@ public class Inventory
     {
         return inventory;
     }
-
+    public int size()
+    {
+        int result = 0;
+        for(int i = 0; i < inventory.Length; i++)
+        {
+            if(inventory[i] != 0)
+            {
+                result++;
+            }
+        }
+        return result;
+    }
 }
