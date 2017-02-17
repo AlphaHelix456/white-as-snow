@@ -17,6 +17,9 @@ public class CombatUIController : MonoBehaviour {
     private Inventory inventory;
     private int inventoryIndex;
     public int menuState;
+
+    private BattleStateMachine BSM;
+
     private const int CHOOSE_ACTION = 0;
     private const int CHOOSE_ATTACK = 1;
     private const int CHOOSE_TARGET = 2;
@@ -43,6 +46,8 @@ public class CombatUIController : MonoBehaviour {
         {
             inventory = new Inventory(new int[8] {1, 3, 2, 2, 2, 1, 2, 3 });
         }
+        BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
+
         inventoryIndex = 0;
         row = 0;
         updateButtons();
@@ -110,16 +115,20 @@ public class CombatUIController : MonoBehaviour {
     public void startTurn()
     {
         //When a player's turn starts
+        eventSystem.SetSelectedGameObject(rightUIButtons[0]);
+        //rightUIButtons[0].GetComponent<Button>().selectable.OnSelect(null);
+
         menuState = CHOOSE_ACTION;
         leftUIMessage.text = "Choose an action";
         lastSelectedLeftButton = leftUIButtons[0];
         lastSelectedRightButton = rightUIButtons[0];
-        eventSystem.SetSelectedGameObject(rightUIButtons[0]);
     }
     public void fightPress()
     {
         //when the fight button is pressed
         menuState = CHOOSE_ATTACK;
+        BSM.WolfInput = BattleStateMachine.WolfGUI.INPUT1;
+
         updateButtons();
         lastSelectedRightButton = eventSystem.currentSelectedGameObject;
         eventSystem.SetSelectedGameObject(leftUIButtons[0]);
@@ -165,7 +174,10 @@ public class CombatUIController : MonoBehaviour {
             menuState = CHOOSE_TARGET;
             lastSelectedLeftButton = eventSystem.currentSelectedGameObject;
             eventSystem.SetSelectedGameObject(leftUIButtons[0]);
+            BSM.Input1();
+            BSM.WolfInput = BattleStateMachine.WolfGUI.INPUT2;
             updateButtons();
+            print("Move on");
         }
         else
         {
@@ -199,6 +211,11 @@ public class CombatUIController : MonoBehaviour {
             menuState = NOT_PLAYER_TURN;
             eventSystem.SetSelectedGameObject(null);
             updateButtons();
+            BSM.Input2(BSM.EnemiesInBattle[0]);
+            BSM.WolfInput = BattleStateMachine.WolfGUI.DONE;
+
+            startTurn();
+
         }
         else
         {
@@ -216,7 +233,10 @@ public class CombatUIController : MonoBehaviour {
             updateButtons();
             int inventorySlot = inventoryIndex + int.Parse(lastSelectedLeftButton.name.Substring(15));
             inventory.removeItem(inventorySlot);
-        } else
+            BSM.WolfInput = BattleStateMachine.WolfGUI.DONE;
+
+        }
+        else
         {
 
         }
@@ -341,7 +361,8 @@ public class CombatUIController : MonoBehaviour {
                 setNumOptions(3);
                 break;
             case CHOOSE_TARGET:
-                leftUIText[0].text = "Tom Nook";
+                //leftUIText[0].text = "Tom Nook";
+                leftUIText[0].text = BSM.EnemiesInBattle[0].GetComponent<EnemyStateMachine>().enemy.name;
                 leftUIText[1].text = "Back";
                 leftUIText[2].text = "";
                 leftUIText[3].text = "";

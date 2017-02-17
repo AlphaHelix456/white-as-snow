@@ -22,8 +22,8 @@ public class BattleStateMachine : MonoBehaviour {
     {
         ACTIVATE,
         WAITING,
-        INPUT1, //Ability name
-        INPUT2, //Enemy target
+        INPUT1,
+        INPUT2,
         DONE
     }
 
@@ -35,6 +35,8 @@ public class BattleStateMachine : MonoBehaviour {
 
     public GameObject AttackPanel;
     public GameObject EnemySelectPanel;
+
+
 	// Use this for initialization
 	void Start () {
         battleStates = PerformAction.WAIT;
@@ -45,7 +47,7 @@ public class BattleStateMachine : MonoBehaviour {
         AttackPanel.SetActive(false);
         EnemySelectPanel.SetActive(false);
 
-        EnemyButtons();
+        //EnemyButtons();
 	}
 	
 	// Update is called once per frame
@@ -99,6 +101,14 @@ public class BattleStateMachine : MonoBehaviour {
                     //idling
                     break;
                 }
+            case (WolfGUI.INPUT1):
+                {
+                    break;
+                }
+            case (WolfGUI.INPUT2):
+                {
+                    break;
+                }
                 
             case (WolfGUI.DONE):
                 {
@@ -116,7 +126,6 @@ public class BattleStateMachine : MonoBehaviour {
     {
         foreach (GameObject enemy in EnemiesInBattle)
         {
-            print("hello");
             GameObject newButton = Instantiate(enemyButton) as GameObject; //Find enemy buttons as prefab
             EnemySelectButton button = newButton.GetComponent<EnemySelectButton>();
             EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
@@ -135,21 +144,22 @@ public class BattleStateMachine : MonoBehaviour {
         WolfChoice.AttackerGameObject = WolvesToManage[0];
         WolfChoice.Type = "wolf";
 
-        AttackPanel.SetActive(false); //after choosing, disable attack panel on the right
-        EnemySelectPanel.SetActive(true); //and enable the enemy's panel on the left
+        //AttackPanel.SetActive(false); //after choosing, disable attack panel on the right
+        //EnemySelectPanel.SetActive(true); //and enable the enemy's panel on the left
 
     }
 
     public void Input2(GameObject chosenEnemy) //Enemy selection
     {
         WolfChoice.AttackersTarget = chosenEnemy;
-        WolfInput = WolfGUI.DONE;
+
+        //WolfInput = WolfGUI.DONE;
     }
 
     void WolfInputDone()
     {
         PerformList.Add(WolfChoice); //Command sent to BSM list of commands
-        EnemySelectPanel.SetActive(false);
+        AttackPanel.SetActive(false);
         WolvesToManage[0].transform.FindChild("selector").gameObject.SetActive(false); //Indicator disappears in-game
         WolvesToManage.RemoveAt(0); //Cycle into the next wolf's input handling
         WolfInput = WolfGUI.ACTIVATE;
