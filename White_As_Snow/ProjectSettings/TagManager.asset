@@ -7,6 +7,7 @@ TagManager:
   - enemy
   - wolf
   - Back
+  - GameData
   layers:
   - Default
   - TransparentFX
