@@ -76,15 +76,7 @@ public class GameData : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            SceneManager.LoadScene("Overworld");
-            gameProgress += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SceneManager.LoadScene("JakeSmith");
-        }
+     
     }
     public void setWolfStats(int wolfIndex, WolfCombat newStats)
     {
