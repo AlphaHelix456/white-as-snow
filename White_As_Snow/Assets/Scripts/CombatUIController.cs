@@ -29,6 +29,16 @@ public class CombatUIController : MonoBehaviour {
     private int row;
     void Start () {
         menuState = CHOOSE_ACTION;
+        inventory = new Inventory();
+        try
+        {
+            inventory = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().getInventory();
+        }
+        catch
+        {
+            print("Inventory not found");
+            inventory = new Inventory(new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 });
+        }
         if (debug)
         {
             inventory = new Inventory(new int[8] {1, 3, 2, 2, 2, 1, 2, 3 });

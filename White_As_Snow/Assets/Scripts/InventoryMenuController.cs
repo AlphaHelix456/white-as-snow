@@ -41,6 +41,15 @@ public class InventoryMenuController : MonoBehaviour
         selectedItemID = 0;
         selectedItemSlot = 0;
         inventory = new Inventory();
+        try
+        {
+            inventory = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().getInventory();
+        }
+        catch
+        {
+            print("Inventory not found");
+            inventory = new Inventory(new int[8] { 0,0,0,0,0,0,0,0});
+        }
         if (debug)
         {
             inventory = new Inventory(new int[8] { 1, 2, 3, 0, 0, 2, 3, 1 });  //remove later
