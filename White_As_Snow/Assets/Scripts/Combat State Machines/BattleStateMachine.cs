@@ -116,13 +116,12 @@ public class BattleStateMachine : MonoBehaviour {
     {
         foreach (GameObject enemy in EnemiesInBattle)
         {
-            print("hello");
             GameObject newButton = Instantiate(enemyButton) as GameObject; //Find enemy buttons as prefab
             EnemySelectButton button = newButton.GetComponent<EnemySelectButton>();
             EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
 
             Text buttonText = newButton.transform.FindChild("Text").gameObject.GetComponent<Text>();
-            buttonText.text = cur_enemy.enemy.name;
+            buttonText.text = cur_enemy.enemy.theName;
 
             button.EnemyPrefab = enemy;
             newButton.transform.SetParent(EnemySelectPanel.transform,false);

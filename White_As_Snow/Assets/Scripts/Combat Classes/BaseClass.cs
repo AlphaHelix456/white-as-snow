@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class WolfCombat
-{
-    new public string name;
+public class BaseClass {
+    public string theName;
 
     public float baseHP;
     public float currentHP;
 
-    public float baseHunger;
-    public float currentHunger;
-
     public float baseATK;
     public float currentATK;
+
     public float baseDEF;
     public float currentDEF;
 
@@ -23,5 +19,4 @@ public class WolfCombat
 
     public float baseCRIT;
     public float currentCRIT;
-
 }
