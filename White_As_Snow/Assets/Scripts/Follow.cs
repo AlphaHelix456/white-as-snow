@@ -37,7 +37,7 @@ public class NewBehaviourScript : MonoBehaviour {
 			angle = getAngle ();
 			if (angle < 67.5f) 
 			{
-				if (getXDiff () > 0) { //If the follower is to the right of the player
+				if (getXDiff () > 0) //If the follower is to the right of the player
 				{
 					//Move left
 				} 
@@ -72,18 +72,18 @@ public class NewBehaviourScript : MonoBehaviour {
 
 	private float getDist()
 	{
-		return((this.transform.position - player.transform.position).magnitude;
+		return(this.transform.position - player.transform.position).magnitude;
 
 	}
 	
-	private float.getAngle() //Returns the angle measured counterclockwise from the x-axis
+	private float getAngle() //Returns the angle measured counterclockwise from the x-axis
 	{
 		return Mathf.Acos(Mathf.Abs(this.transform.position.x - player.transform.position.x)/getDist())*180/Mathf.PI;
 
 	}
 	private float getXDiff()
 	{
-		return this.transform.poistion.x - player.transform.position.x;
+		return this.transform.position.x - player.transform.position.x;
 	}
 	
 	private float getYDiff()
