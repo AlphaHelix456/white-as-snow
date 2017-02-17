@@ -6,7 +6,7 @@ public class Inventory
 {
 
     // Use this for initialization
-    public int[] inventory;
+    private int[] inventory;
     private const int NO_ITEM = 0;
     private const int APPLE = 1;
     private const int GRAPES = 2;
