@@ -16,6 +16,8 @@ public class GameData : MonoBehaviour {
     private const int OVERWORLD_1 = 2;
     private const int BATTLE_1 = 3;
 
+    private Dictionary<int, List<bool>> triggerDict;
+
     private Inventory inventory;
 	void Start () {
         if(GameObject.FindGameObjectsWithTag("GameData").Length == 1)
@@ -25,6 +27,7 @@ public class GameData : MonoBehaviour {
         {
             DestroyObject(this);
         }
+        wolfStats = new WolfCombat[3];
         wolfStats[0] = new WolfCombat();
         wolfStats[ALPHA].name = "Alpha";
         wolfStats[ALPHA].baseHP = 300;
@@ -72,10 +75,12 @@ public class GameData : MonoBehaviour {
 
         gameProgress = OVERWORLD_0;
         inventory = new Inventory(new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 });
+        triggerDict = new Dictionary<int, List<bool>>();
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
      
     }
     public void setWolfStats(int wolfIndex, WolfCombat newStats)
@@ -101,5 +106,13 @@ public class GameData : MonoBehaviour {
     public void setGameProgress(int x)
     {
         gameProgress = x;
+    }
+    public List<bool> getTriggers(int x)
+    {
+        return triggerDict[x];
+    }
+    public void setTrigger(int gameProgression, int triggerIndex, bool value)
+    {
+        triggerDict[gameProgression][triggerIndex] = value;
     }
 }
