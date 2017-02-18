@@ -815,7 +815,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: OptionText
+  m_Text: Hyper
 --- !u!222 &493367089
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2026,7 +2026,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: OptionText
+  m_Text: Caution
 --- !u!222 &951801066
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2133,7 +2133,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: OptionText
+  m_Text: Alpha
 --- !u!222 &976281577
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2230,9 +2230,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSprites:
   - {fileID: 21300000, guid: c0f713c95aa653147b3bbd590e2379fc, type: 3}
-  - {fileID: 21300000, guid: 55eb3c8db832e454ea6efcd32adb8408, type: 3}
-  - {fileID: 21300000, guid: 2bf3273bbe9d1094eb3ce2e9696d1e7f, type: 3}
-  - {fileID: 21300000, guid: 3265f750818e04d459e1f1f7671aecb7, type: 3}
+  - {fileID: 21300000, guid: a5935f71844883943ba3bad41df8d8da, type: 3}
+  - {fileID: 21300000, guid: 895cd091da932c543a4e2f1ae7f0fb75, type: 3}
+  - {fileID: 21300000, guid: c0ad7d3c77b89794587ee75dff184d31, type: 3}
   invSquares:
   - {fileID: 1200708083}
   - {fileID: 760057572}
@@ -4951,14 +4951,15 @@ MonoBehaviour:
   emptyImg: {fileID: 21300000, guid: c0f713c95aa653147b3bbd590e2379fc, type: 3}
   itemText:
   - 
-  - Big, red, and juicy
-  - Small, green, and juicy
-  - MeatMeatMeatMeat
+  - Meat from a fox
+  - Meat from an elk
+  - Meat from a squirrel
   itemUseText:
-  - Yum!
-  - '[Wolf] feels less hungry.'
-  - '[Wolf] appears satisfied.'
-  - '[Wolf] chows down.'
+  - ' is full.'
+  - ' feels pretty good.'
+  - ' is looking better.'
+  - ' is no longer starving'
+  - ' is still famished.'
   debug: 1
 --- !u!4 &2118476689
 Transform:

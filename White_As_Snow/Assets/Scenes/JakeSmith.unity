@@ -1400,7 +1400,6 @@ MonoBehaviour:
   - {fileID: 1112318813}
   - {fileID: 391396855}
   - {fileID: 140347762}
-  wolves: []
   leftUIMessage: {fileID: 219941604}
   whiteImg: {fileID: 21300000, guid: 93dcfa0a4d1ecaf49aaf77ed6f59afcf, type: 3}
   emptyImg: {fileID: 21300000, guid: c0f713c95aa653147b3bbd590e2379fc, type: 3}
@@ -2298,7 +2297,7 @@ MonoBehaviour:
   WolvesToManage: []
   enemyButton: {fileID: 1083800725121654, guid: 15932f71375505c428c91a898cfe5b81,
     type: 2}
-  AttackPanel: {fileID: 1552351138}
+  AttackPanel: {fileID: 149357}
   EnemySelectPanel: {fileID: 1795852970}
 --- !u!4 &1208869052
 Transform:

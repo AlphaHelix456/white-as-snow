@@ -35,7 +35,7 @@ public class WolfStateMachine : MonoBehaviour {
     void Start () {
         startPosition = transform.position;
 
-        //cur_cooldown = Random.Range(0, 2.5f); If one class (Hyper) should use his crit/hunger to start attacking first
+        cur_cooldown = Random.Range(0, 2.5f); //If one class (Hyper) should use his crit/hunger to start attacking first
         waitBar = this.transform.FindChild("wait_fill").gameObject;
         selector = this.transform.FindChild("selector").gameObject;
         selector.SetActive(false);

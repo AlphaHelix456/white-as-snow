@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class BattleStateMachine : MonoBehaviour {
+public class BattleStateMachine : MonoBehaviour
+{
 
     public enum PerformAction
     {
+        STARTING,
         WAIT,
         TAKEACTION,
         PERFORMACTION
@@ -32,37 +35,44 @@ public class BattleStateMachine : MonoBehaviour {
     private HandleTurns WolfChoice;
 
     public GameObject enemyButton;
-
     public GameObject AttackPanel;
-    public GameObject EnemySelectPanel;
 
+    private CombatUIController CombatUI;
+    public GameObject initSelector;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
+
+        CombatUI = GameObject.Find("CombatUIController").GetComponent<CombatUIController>();
         battleStates = PerformAction.WAIT;
         WolvesInBattle.AddRange(GameObject.FindGameObjectsWithTag("wolf"));
         EnemiesInBattle.AddRange(GameObject.FindGameObjectsWithTag("enemy"));
         WolfInput = WolfGUI.ACTIVATE;
 
-        AttackPanel.SetActive(false);
-        EnemySelectPanel.SetActive(false);
 
-        //EnemyButtons();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		switch(battleStates)
-        {
+        //AttackPanel.SetActive(false);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        switch (battleStates)
+        {       
             case (PerformAction.WAIT):
                 if (PerformList.Count > 0)
                 {
                     battleStates = PerformAction.TAKEACTION;
                 }
+                else if (WolvesToManage.Count == 0)
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                }
                 break;
             case (PerformAction.TAKEACTION):
                 GameObject performer = GameObject.Find(PerformList[0].Attacker);
-                if(PerformList[0].Type == "enemy")
+                if (PerformList[0].Type == "enemy")
                 {
                     EnemyStateMachine ESM = performer.GetComponent<EnemyStateMachine>();
                     ESM.WolfToAttack = PerformList[0].AttackersTarget;
@@ -79,23 +89,24 @@ public class BattleStateMachine : MonoBehaviour {
             case (PerformAction.PERFORMACTION):
                 //idle
                 break;
-
         }
         switch (WolfInput)
         {
             case (WolfGUI.ACTIVATE):
                 {
-                    if(WolvesToManage.Count > 0)
+                    if (WolvesToManage.Count > 0)
                     {
                         WolvesToManage[0].transform.FindChild("selector").gameObject.SetActive(true); //Indicator appears in-game
                         WolfChoice = new HandleTurns();
 
-                        AttackPanel.SetActive(true); //Right grey attack panel appears
+                        AttackPanel.SetActive(true); //attack panel appears
+                        CombatUI.startTurn();
+
                         WolfInput = WolfGUI.WAITING; //Idle state for Wolf Input
                     }
                     break;
                 }
-                
+
             case (WolfGUI.WAITING):
                 {
                     //idling
@@ -109,14 +120,15 @@ public class BattleStateMachine : MonoBehaviour {
                 {
                     break;
                 }
-                
+
             case (WolfGUI.DONE):
                 {
                     WolfInputDone();
                     break;
                 }
         }
-	}
+
+    }
     public void CollectActions(HandleTurns input) //When a unit's StateMachine issues an input, add it to global list of queued actions
     {
         PerformList.Add(input);
@@ -124,6 +136,7 @@ public class BattleStateMachine : MonoBehaviour {
 
     void EnemyButtons()
     {
+        /*
         foreach (GameObject enemy in EnemiesInBattle)
         {
             GameObject newButton = Instantiate(enemyButton) as GameObject; //Find enemy buttons as prefab
@@ -136,6 +149,7 @@ public class BattleStateMachine : MonoBehaviour {
             button.EnemyPrefab = enemy;
             newButton.transform.SetParent(EnemySelectPanel.transform,false);
         }
+        */
     }
 
     public void Input1() //attack choice in the UI
@@ -159,7 +173,6 @@ public class BattleStateMachine : MonoBehaviour {
     void WolfInputDone()
     {
         PerformList.Add(WolfChoice); //Command sent to BSM list of commands
-        AttackPanel.SetActive(false);
         WolvesToManage[0].transform.FindChild("selector").gameObject.SetActive(false); //Indicator disappears in-game
         WolvesToManage.RemoveAt(0); //Cycle into the next wolf's input handling
         WolfInput = WolfGUI.ACTIVATE;

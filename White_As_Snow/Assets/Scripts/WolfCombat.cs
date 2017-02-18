@@ -24,4 +24,5 @@ public class WolfCombat
     public float baseCRIT;
     public float currentCRIT;
 
+  
 }

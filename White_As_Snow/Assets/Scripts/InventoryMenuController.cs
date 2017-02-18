@@ -25,30 +25,51 @@ public class InventoryMenuController : MonoBehaviour
     private int selectedItemID;
     private int selectedItemSlot;
     private Inventory inventory;
-
+    private GameData gameData;
+    private WolfCombat[] wolfStats;
     private int menuState;
     private const int NOT_IN_MENU = 0;
     private const int INVENTORY_PANELS = 1;
     private const int ITEM_OPTION_SELECT = 2;
 
     private const int NO_ITEM = 0;
-    private const int APPLE = 1;            //to be changed as real items are designed
-    private const int GRAPES = 2;
-    private const int MEAT = 3;
+    private const int FOX_MEAT = 1;            //to be changed as real items are designed
+    private const int ELK_MEAT = 2;
+    private const int SQUIRREL_MEAT = 3;
 
+    private const int FOX_MEAT_HP = 150;    //change these to change item effect
+    private const int ELK_MEAT_HP = 200;
+    private const int SQUIRREL_MEAT_HP = 50;
+
+    private const int FOX_MEAT_HUNGER = 30;
+    private const int ELK_MEAT_HUNGER = 50;
+    private const int SQUIRREL_MEAT_HUNGER = 15;
     public bool debug = false;
 	void Start () {
         selectedItemID = 0;
         selectedItemSlot = 0;
         inventory = new Inventory();
+        gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+        wolfStats = new WolfCombat[3];
+        
+        if(gameData == null)
+        {
+            print("GameData not found");
+        }
         try
         {
-            inventory = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().getInventory();
+            inventory = gameData.getInventory();
+            wolfStats[0] = gameData.getWolfStats(0);
+            wolfStats[1] = gameData.getWolfStats(1);
+            wolfStats[2] = gameData.getWolfStats(2);
         }
         catch
         {
             print("Inventory not found");
             inventory = new Inventory(new int[8] { 0,0,0,0,0,0,0,0});
+            wolfStats[0] = new WolfCombat();
+            wolfStats[1] = new WolfCombat();
+            wolfStats[2] = new WolfCombat();
         }
         if (debug)
         {
@@ -144,11 +165,12 @@ public class InventoryMenuController : MonoBehaviour
     {
         this.useInventoryItem(selectedItemSlot, int.Parse(eventSystem.currentSelectedGameObject.name.Substring(14)));
         itemDesc.SetActive(true);
+        displayWolfHungerMessage(int.Parse(eventSystem.currentSelectedGameObject.name.Substring(14)));
         selectionMenu.SetActive(false);
         inventoryPanels[selectedItemSlot].GetComponent<Image>().sprite = emptyImg; //Removes manual white outline and returns to automatic mode for outlines
         eventSystem.SetSelectedGameObject(inventoryPanels[selectedItemSlot]);
         menuState = INVENTORY_PANELS;
-        itemDesc.GetComponent<Text>().text = itemUseText[(int)(Random.value * 4)];
+        
     }
     public void cancelPress()
     {
@@ -165,25 +187,59 @@ public class InventoryMenuController : MonoBehaviour
         inventory.updateInventory(newInventory);
         spriteManager.updateSprites(inventory.toArray());
     }
-    public void useInventoryItem(int itemToUse, int optionSelected)
-    { //Uses item (to be coded), removes it from the inventory, and updates inventory
+    public void useInventoryItem(int itemToUse, int wolfSelected)
+    { //Uses item, removes it from the inventory, and updates inventory
 
         int itemID = inventory.get(itemToUse);
+        WolfCombat wolf = wolfStats[wolfSelected];
         switch (itemID)
         {
             case NO_ITEM:
                 throw new System.ArgumentException("CANNOT USE NO_ITEM");
-            case APPLE:
+            case FOX_MEAT:
+                //conditional assignment, prevents hp from going above maximum
+                wolf.currentHP = Mathf.Min(wolf.currentHP + FOX_MEAT_HP, wolf.baseHP);
+                wolf.currentHunger = Mathf.Min(wolf.currentHunger + FOX_MEAT_HUNGER, wolf.baseHunger);
                 break;
-            case GRAPES:
+            case ELK_MEAT:
+                wolf.currentHP = Mathf.Min(wolf.currentHP + ELK_MEAT_HP, wolf.baseHP);
+                wolf.currentHunger = Mathf.Min(wolf.currentHunger + ELK_MEAT_HUNGER, wolf.baseHunger);
                 break;
-            case MEAT:
+            case SQUIRREL_MEAT:
+                wolf.currentHP = Mathf.Min(wolf.currentHP + ELK_MEAT_HP, wolf.baseHP);
+                wolf.currentHunger = Mathf.Min(wolf.currentHunger + ELK_MEAT_HUNGER, wolf.baseHunger);
                 break;
             default:
                 throw new System.ArgumentException("ITEM_ID NOT VALID ITEM");
         }
-        inventory.removeItem(itemToUse);
+        if (debug)
+        {
+            print(wolf.name + " HP: " + wolf.currentHP);
+            print(wolf.name + " Hunger: " + wolf.currentHunger);
+        }
+
+            inventory.removeItem(itemToUse);
         spriteManager.updateSprites(inventory.toArray());
     }
-    
+    public void displayWolfHungerMessage(int wolfSelected)
+    {
+        float hungerPercent = (float)(wolfStats[wolfSelected].currentHunger*1.0 / wolfStats[wolfSelected].baseHunger);
+        if (hungerPercent >= 0.99f)
+        {
+            itemDesc.GetComponent<Text>().text = wolfStats[wolfSelected].name + itemUseText[0];
+        } else if (hungerPercent >= 0.80f)
+        {
+            itemDesc.GetComponent<Text>().text = wolfStats[wolfSelected].name + itemUseText[1];
+        } else if (hungerPercent >= 0.60f)
+        {
+            itemDesc.GetComponent<Text>().text = wolfStats[wolfSelected].name + itemUseText[2];
+        }
+        else if(hungerPercent >= 0.4f)
+        {
+            itemDesc.GetComponent<Text>().text = wolfStats[wolfSelected].name + itemUseText[3];
+        } else
+        {
+            itemDesc.GetComponent<Text>().text = wolfStats[wolfSelected].name + itemUseText[4];
+        }
+    }
 }

@@ -10,7 +10,7 @@ public class CombatUIController : MonoBehaviour {
     public GameObject[] leftUIButtons;
     public GameObject[] rightUIButtons;
     public Text[] leftUIText;
-    public WolfCombat[] wolves;
+    
     public Text leftUIMessage;
     public Sprite whiteImg;
     public Sprite emptyImg;
@@ -19,6 +19,7 @@ public class CombatUIController : MonoBehaviour {
     public int menuState;
 
     private BattleStateMachine BSM;
+    public GameObject AttackPanel;
 
     private const int CHOOSE_ACTION = 0;
     private const int CHOOSE_ATTACK = 1;
@@ -30,17 +31,53 @@ public class CombatUIController : MonoBehaviour {
     private GameObject lastSelectedRightButton;
     private GameObject lastSelectedLeftButton;
     private int row;
+    private GameData gameData;
+    private WolfCombat[] wolfStats;
+    private const int NO_ITEM = 0;
+    private const int FOX_MEAT = 1;            //to be changed as real items are designed
+    private const int ELK_MEAT = 2;
+    private const int SQUIRREL_MEAT = 3;
+
+    private const int FOX_MEAT_HP = 150;    //change these to change item effect
+    private const int ELK_MEAT_HP = 200;
+    private const int SQUIRREL_MEAT_HP = 50;
+
+    private const int FOX_MEAT_HUNGER = 30;
+    private const int ELK_MEAT_HUNGER = 50;
+    private const int SQUIRREL_MEAT_HUNGER = 15;
     void Start () {
+
         menuState = CHOOSE_ACTION;
         inventory = new Inventory();
+        gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+        if(gameData == null)
+        {
+            print("GameData not found");
+        }
+        wolfStats = new WolfCombat[3];
         try
         {
+            wolfStats[0] = gameData.getWolfStats(0);
+            wolfStats[1] = gameData.getWolfStats(1);
+            wolfStats[2] = gameData.getWolfStats(2);
+        }
+        catch
+        {
+            print("WolfCombat not found");
+            wolfStats[0] = new WolfCombat();
+            wolfStats[1] = new WolfCombat();
+            wolfStats[2] = new WolfCombat();
+        }
+        try
+        {
+            
             inventory = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().getInventory();
         }
         catch
         {
             print("Inventory not found");
             inventory = new Inventory(new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 });
+
         }
         if (debug)
         {
@@ -51,14 +88,16 @@ public class CombatUIController : MonoBehaviour {
         inventoryIndex = 0;
         row = 0;
         updateButtons();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+    
+    // Update is called once per frame
+    void Update () {
         if (debug && Input.GetKeyDown(KeyCode.I))
         {
             startTurn();
         }
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             back();
@@ -111,17 +150,18 @@ public class CombatUIController : MonoBehaviour {
                 row = 0;
             }
         }
-	}
+
+    }
     public void startTurn()
     {
         //When a player's turn starts
-        eventSystem.SetSelectedGameObject(rightUIButtons[0]);
-        //rightUIButtons[0].GetComponent<Button>().selectable.OnSelect(null);
 
         menuState = CHOOSE_ACTION;
-        leftUIMessage.text = "Choose an action";
+        leftUIMessage.text = "Choose an action.";
         lastSelectedLeftButton = leftUIButtons[0];
         lastSelectedRightButton = rightUIButtons[0];
+
+        eventSystem.SetSelectedGameObject(rightUIButtons[0]);
     }
     public void fightPress()
     {
@@ -177,7 +217,6 @@ public class CombatUIController : MonoBehaviour {
             BSM.Input1();
             BSM.WolfInput = BattleStateMachine.WolfGUI.INPUT2;
             updateButtons();
-            print("Move on");
         }
         else
         {
@@ -210,11 +249,11 @@ public class CombatUIController : MonoBehaviour {
         {
             menuState = NOT_PLAYER_TURN;
             eventSystem.SetSelectedGameObject(null);
-            updateButtons();
             BSM.Input2(BSM.EnemiesInBattle[0]);
             BSM.WolfInput = BattleStateMachine.WolfGUI.DONE;
 
-            startTurn();
+            updateButtons();
+            AttackPanel.SetActive(false);
 
         }
         else
@@ -229,10 +268,11 @@ public class CombatUIController : MonoBehaviour {
         if (validChoice)
         {
             menuState = NOT_PLAYER_TURN;
-            eventSystem.SetSelectedGameObject(null);
             updateButtons();
             int inventorySlot = inventoryIndex + int.Parse(lastSelectedLeftButton.name.Substring(15));
-            inventory.removeItem(inventorySlot);
+            useInventoryItem(inventorySlot, int.Parse(eventSystem.currentSelectedGameObject.name.Substring(15)));
+            eventSystem.SetSelectedGameObject(null);
+
             BSM.WolfInput = BattleStateMachine.WolfGUI.DONE;
 
         }
@@ -324,11 +364,11 @@ public class CombatUIController : MonoBehaviour {
             case 0:
                 throw new System.ArgumentException();
             case 1:
-                return "Apple";
+                return "Fox Meat";
             case 2:
-                return "Grapes";
+                return "Elk Meat";
             case 3:
-                return "Meat";
+                return "Squirrel Meat";
             default:
                 throw new System.ArgumentException("ITEM_ID NOT VALID ITEM");
         }
@@ -342,7 +382,7 @@ public class CombatUIController : MonoBehaviour {
         leftUIButtons[1].tag = "Untagged";
         leftUIButtons[2].tag = "Untagged";
         leftUIButtons[3].tag = "Untagged";
-        leftUIMessage.enabled = false;
+        //leftUIMessage.enabled = false;
         switch (menuState)
         {
             case CHOOSE_ACTION:
@@ -394,5 +434,45 @@ public class CombatUIController : MonoBehaviour {
                 leftUIMessage.text = "This is not the player's turn";
                 break;
         }
+    }
+    public void useInventoryItem(int itemToUse, int wolfSelected)
+    { //Uses item, removes it from the inventory, and updates inventory
+
+        int itemID = inventory.get(itemToUse);
+        WolfCombat wolf = wolfStats[wolfSelected];
+        switch (itemID)
+        {
+            case NO_ITEM:
+                throw new System.ArgumentException("CANNOT USE NO_ITEM");
+            case FOX_MEAT:
+                //conditional assignment, prevents hp from going above maximum
+                wolf.currentHP = Mathf.Min(wolf.currentHP + FOX_MEAT_HP, wolf.baseHP);
+                wolf.currentHunger = Mathf.Min(wolf.currentHunger + FOX_MEAT_HUNGER, wolf.baseHunger);
+                break;
+            case ELK_MEAT:
+                wolf.currentHP = Mathf.Min(wolf.currentHP + ELK_MEAT_HP, wolf.baseHP);
+                wolf.currentHunger = Mathf.Min(wolf.currentHunger + ELK_MEAT_HUNGER, wolf.baseHunger);
+                break;
+            case SQUIRREL_MEAT:
+                wolf.currentHP = Mathf.Min(wolf.currentHP + ELK_MEAT_HP, wolf.baseHP);
+                wolf.currentHunger = Mathf.Min(wolf.currentHunger + ELK_MEAT_HUNGER, wolf.baseHunger);
+                break;
+            default:
+                throw new System.ArgumentException("ITEM_ID NOT VALID ITEM");
+        }
+        if (debug)
+        {
+            print(wolf.name + " HP: " + wolf.currentHP);
+            print(wolf.name + " Hunger: " + wolf.currentHunger);
+        }
+
+        inventory.removeItem(itemToUse);
+
+    }
+    public void activateArrow()
+    {
+        //eventSystem.SetSelectedGameObject(rightUIButtons[0]);
+        //eventSystem.SetSelectedGameObject(rightUIButtons[0].GetComponentInChildren<Button>().gameObject, null);
+
     }
 }
