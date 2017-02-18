@@ -12,6 +12,7 @@ public class MoveLoop : MonoBehaviour {
     private Vector3 loopLocation;
     private float myWidth;
     private Vector3 moveVector;
+    private float timer;
 
 	// Use this for initialization
 	void Start () {
@@ -20,16 +21,22 @@ public class MoveLoop : MonoBehaviour {
         camWidth = camHeight * cam.aspect;
         myWidth = (float)GetComponent<RectTransform>().rect.width;
         loopLocation = treeTarget.transform.position;
-        
+        timer = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
         transform.position += moveVector * Time.deltaTime;
-        if (cam.WorldToScreenPoint(transform.position).x < -myWidth/2)
+        if(timer > 0.1f)
         {
-            //transform.position = new Vector2(cam.ViewportToWorldPoint(new Vector3(1,0,0)).x+myWidth/2,transform.position.y);
-            transform.position = loopLocation;
+            if (cam.WorldToScreenPoint(transform.position).x < -myWidth / 2)
+            {
+                transform.position = loopLocation;
+            }
+        } else
+        {
+            timer += Time.deltaTime;
         }
+        
 	}
 }
