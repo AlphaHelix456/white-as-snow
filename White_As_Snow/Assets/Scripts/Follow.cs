@@ -7,21 +7,26 @@ public class Follow : MonoBehaviour
 
     private readonly float START_D = 6.5f;
     private readonly float STOP_D = 5f; //When the wolves will stop walking
-    private readonly float FOLLOW_D = 4.2f; //Followers must stay at least this distance apart
-    private readonly float SPEED = 4.5f;
+    private readonly float MIN_D = 2.5f; //Wolves must stay at least this distance apart
+    private readonly float MIN_D_SOFT = 3.3f; //Followers will try to stay at least this far apart when walking
+    private float SPEED = 4.5f;
+
     private GameObject player;
     private GameObject otherFollower;
     private Rigidbody2D rb;
-    private bool moving;
+
+    private bool needsToMove;
+    private bool adjusting;
     private float angle;
-    private bool[][] dirs = new bool[2][];
+    private bool[][] dirs = new bool[2][]; //Directions, where left=0, right=1, up=2, down=3
 
     void Start()
     {
         for (int i = 0; i < 2; i++)
             dirs[i] = new bool[4];
         player = GameObject.Find("wolf");
-        moving = false;
+        needsToMove = false;
+        adjusting = false;
         rb = GetComponent<Rigidbody2D>();
         if (gameObject.name == "follower1")
         {
@@ -35,16 +40,29 @@ public class Follow : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!moving && toMove())
+        if (adjusting)
         {
-            moving = true;
+            if (getDist(otherFollower) >= MIN_D_SOFT)
+            {
+                adjusting = false;
+                SPEED = 4.5f;
+                rb.velocity = new Vector2(0, 0);
+            }
+            else
+            {
+                angleSeparate();
+            }
+        }
+        if (!needsToMove && toMove())
+        {
+            needsToMove = true;
         }
 
-        if (moving)
+        if (needsToMove)
         {
             if (getDist(player) <= STOP_D)
             {
-                moving = false;
+                needsToMove = false;
                 rb.velocity = new Vector2(0, 0);
             }
             else
@@ -53,8 +71,8 @@ public class Follow : MonoBehaviour
                 dirs[1] = walkDir(otherFollower);
 
                 //Left=0, right=1, up=2, down=3
-                //Movement in direction of player unless there is another wolf in the way
-                if (getDist(otherFollower) > FOLLOW_D || true)
+                //Movement in direction of player
+                if (isClosest() || getDist(otherFollower) > MIN_D)
                 {
                     if (dirs[0][0])
                         rb.velocity = new Vector2(-SPEED, rb.velocity.y);
@@ -71,7 +89,8 @@ public class Follow : MonoBehaviour
                 }
                 else
                 {
-                    
+                    rb.velocity = new Vector2(0, 0);
+                    otherFollower.SendMessage("adjust");
                 }
             }
         }
@@ -89,17 +108,24 @@ public class Follow : MonoBehaviour
 
     private float getDist(GameObject target)
     {
-        return (this.transform.position - player.transform.position).magnitude;
+        return (this.transform.position - target.transform.position).magnitude;
     }
 
     private float getDist(GameObject start, GameObject target)
     {
-        return (start.transform.position - player.transform.position).magnitude;
+        return (start.transform.position - target.transform.position).magnitude;
     }
 
-    private float getAngle(GameObject target) //Returns the angle measured counterclockwise from the x-axis.
+    private float getAngle(GameObject target) //Returns the angle measured counterclockwise from the x-axis, although
+                                              //it reflects across x- and y- axes to find the angle in the first quadrant.
     {
-        return Mathf.Acos(Mathf.Abs(getXDiff(player)) / getDist(player)) * 180 / Mathf.PI;
+        return Mathf.Acos(Mathf.Abs(getXDiff(target)) / getDist(target)) * 180 / Mathf.PI;
+    }
+
+    private float getAngle(GameObject start, GameObject target) //Returns the angle measured counterclockwise from the x-axis, although
+                                              //it reflects across x- and y- axes to find the angle in the first quadrant.
+    {
+        return Mathf.Acos(Mathf.Abs(getXDiff(start,target)) / getDist(start,target)) * 180 / Mathf.PI;
     }
 
     private float getXDiff(GameObject target)
@@ -107,9 +133,19 @@ public class Follow : MonoBehaviour
         return this.transform.position.x - target.transform.position.x;
     }
 
+    private float getXDiff(GameObject start, GameObject target)
+    {
+        return start.transform.position.x - target.transform.position.x;
+    }
+
     private float getYDiff(GameObject target)
     {
         return this.transform.position.y - target.transform.position.y;
+    }
+
+    private float getYDiff(GameObject start, GameObject target)
+    {
+        return start.transform.position.y - target.transform.position.y;
     }
 
     private bool[] walkDir(GameObject target)
@@ -157,5 +193,48 @@ public class Follow : MonoBehaviour
             dirs[3] = false;
         }
         return dirs;
+    }
+
+    private bool isClosest()
+    {
+        if (getDist(player) < getDist(otherFollower, player)) return true;
+        else return false;
+    }
+
+    private void adjust()
+    {
+        adjusting = true;
+        SPEED = 4.4f;
+    }
+
+    private void angleSeparate()
+    {
+        adjusting = true;
+        float a1 = getAngle(player), a2 = getAngle(otherFollower, player);
+        bool greaterA = a1 - a2 >= 0 ? true : false;
+        bool above = getYDiff(player) >= 0;
+        bool right = getXDiff(player) >= 0;
+        bool above2 = getYDiff(otherFollower, player) >= 0;
+        bool right2 = getXDiff(otherFollower, player) >= 0;
+        int quad = above ? (right ? 1 : 2) : (right ? 4 : 3);
+        int quad2 = above2 ? (right2 ? 1 : 2) : (right2 ? 4 : 3);
+        if(quad==quad2)
+        {
+            switch(quad)
+            {
+                case 1:
+                    rb.velocity = greaterA ? new Vector2(-SPEED, 0) : new Vector2(0, -SPEED);
+                    break;
+                case 2:
+                    rb.velocity = greaterA ? new Vector2(SPEED, 0) : new Vector2(0, -SPEED);
+                    break;
+                case 3:
+                    rb.velocity = greaterA ? new Vector2(SPEED, 0) : new Vector2(0, SPEED);
+                    break;
+                case 4:
+                    rb.velocity = greaterA ? new Vector2(-SPEED, 0) : new Vector2(0, SPEED);
+                    break;
+            }
+        }
     }
 }
