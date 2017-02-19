@@ -95,7 +95,7 @@ public class CombatUIController : MonoBehaviour {
     void Update () {
         if (debug && Input.GetKeyDown(KeyCode.I))
         {
-            startTurn();
+            startTurn("Test");
         }
         
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -152,12 +152,12 @@ public class CombatUIController : MonoBehaviour {
         }
 
     }
-    public void startTurn()
+    public void startTurn(string wolfName)
     {
         //When a player's turn starts
 
         menuState = CHOOSE_ACTION;
-        leftUIMessage.text = "Choose an action.";
+        leftUIMessage.text = "Choose an action for " + wolfName + ".";
         lastSelectedLeftButton = leftUIButtons[0];
         lastSelectedRightButton = rightUIButtons[0];
 

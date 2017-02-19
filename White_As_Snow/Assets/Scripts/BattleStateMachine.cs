@@ -100,7 +100,7 @@ public class BattleStateMachine : MonoBehaviour
                         WolfChoice = new HandleTurns();
 
                         AttackPanel.SetActive(true); //attack panel appears
-                        CombatUI.startTurn();
+                        CombatUI.startTurn(WolvesToManage[0].name);
 
                         WolfInput = WolfGUI.WAITING; //Idle state for Wolf Input
                     }
