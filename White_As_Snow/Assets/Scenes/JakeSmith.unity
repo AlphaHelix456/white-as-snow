@@ -105,7 +105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &149358
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1404,6 +1404,7 @@ MonoBehaviour:
   whiteImg: {fileID: 21300000, guid: 93dcfa0a4d1ecaf49aaf77ed6f59afcf, type: 3}
   emptyImg: {fileID: 21300000, guid: c0f713c95aa653147b3bbd590e2379fc, type: 3}
   menuState: 0
+  AttackPanel: {fileID: 149357}
   debug: 1
 --- !u!224 &775151405
 RectTransform:
@@ -2298,7 +2299,7 @@ MonoBehaviour:
   enemyButton: {fileID: 1083800725121654, guid: 15932f71375505c428c91a898cfe5b81,
     type: 2}
   AttackPanel: {fileID: 149357}
-  EnemySelectPanel: {fileID: 1795852970}
+  initSelector: {fileID: 1645546135}
 --- !u!4 &1208869052
 Transform:
   m_ObjectHideFlags: 0
