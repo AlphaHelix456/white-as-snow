@@ -5,7 +5,7 @@ using UnityEngine;
 public class WolfMovement : MonoBehaviour {
 
     Rigidbody2D rb;
-    private readonly float SPEED = 4.5f;
+    private readonly float SPEED = 5.3f;
     protected bool facingright = true;
     protected bool facingup = false;
 

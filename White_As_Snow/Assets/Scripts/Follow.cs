@@ -9,7 +9,7 @@ public class Follow : MonoBehaviour
     private readonly float STOP_D = 5f; //When the wolves will stop walking
     private readonly float MIN_D = 2.5f; //Wolves must stay at least this distance apart
     private readonly float MIN_D_SOFT = 3.3f; //Followers will try to stay at least this far apart when walking
-    private float SPEED = 4.5f;
+    private float SPEED = 5.3f;
 
     private GameObject player;
     private GameObject otherFollower;
@@ -45,7 +45,6 @@ public class Follow : MonoBehaviour
             if (getDist(otherFollower) >= MIN_D_SOFT)
             {
                 adjusting = false;
-                SPEED = 4.5f;
                 rb.velocity = new Vector2(0, 0);
             }
             else
@@ -204,7 +203,6 @@ public class Follow : MonoBehaviour
     private void adjust()
     {
         adjusting = true;
-        SPEED = 4.4f;
     }
 
     private void angleSeparate()

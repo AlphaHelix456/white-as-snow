@@ -23,7 +23,6 @@ public class animationRunner : MonoBehaviour {
         //destroy all game objects
         for (int i = 0; i < sprites.Length; i++)
         {
-            
             image.sprite = sprites[i];
             yield return new WaitForSeconds(animationSpeed);
         }
