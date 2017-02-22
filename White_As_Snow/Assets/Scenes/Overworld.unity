@@ -1554,7 +1554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4805096dcc0c90949b88415417e33016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treeFadeAlpha: 0.5
+  treeFadeAlpha: 0.25
 --- !u!60 &795512541
 PolygonCollider2D:
   m_ObjectHideFlags: 0
