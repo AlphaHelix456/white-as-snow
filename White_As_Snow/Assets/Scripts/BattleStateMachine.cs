@@ -47,7 +47,6 @@ public class BattleStateMachine : MonoBehaviour
     {
         gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         CombatUI = GameObject.Find("CombatUIController").GetComponent<CombatUIController>();
-        loadStats();
 
         battleStates = PerformAction.WAIT;
         WolvesInBattle.AddRange(GameObject.FindGameObjectsWithTag("wolf"));
@@ -59,6 +58,7 @@ public class BattleStateMachine : MonoBehaviour
         }
         WolvesOrderedByDataIndex.Sort((x, y) => x.GetComponent<WolfStateMachine>().wolf.name.CompareTo(y.GetComponent<WolfStateMachine>().wolf.name));
 
+        loadStats();
         WolfInput = WolfGUI.ACTIVATE;
     }
 
@@ -193,7 +193,6 @@ public class BattleStateMachine : MonoBehaviour
             WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentSPD = currentData.currentSPD;
             WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.baseCRIT = currentData.baseCRIT;
             WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentCRIT = currentData.currentCRIT;
-
         }
     }
 }

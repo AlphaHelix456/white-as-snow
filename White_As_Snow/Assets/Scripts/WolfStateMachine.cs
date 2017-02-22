@@ -22,7 +22,7 @@ public class WolfStateMachine : MonoBehaviour {
 
     private float cur_cooldown = 0f;
     private float max_cooldown = 5f;
-    private float max_size = 3f; //largest size the ATB gague should grow to
+    private float max_size = 1f; //largest size the ATB gague should grow to
 
     public GameObject waitBar;
     public GameObject healthBar;
@@ -170,7 +170,7 @@ public class WolfStateMachine : MonoBehaviour {
     }
     public void takeDamage(float incomingDamage)
     {
-        wolf.currentHP -= incomingDamage * (10 / wolf.currentDEF);
+        wolf.currentHP -= Mathf.Floor(incomingDamage * (10 / wolf.currentDEF));
         if (wolf.currentHP <= 0)
         {
             currentState = TurnState.DEAD;

@@ -36,10 +36,10 @@ public class GameData : MonoBehaviour {
         wolfStats[ALPHA].currentHunger = 100;
         wolfStats[ALPHA].baseATK = 50;
         wolfStats[ALPHA].currentATK = 50;
-        wolfStats[ALPHA].baseDEF = 100;
-        wolfStats[ALPHA].currentDEF = 100;
-        wolfStats[ALPHA].baseSPD = 100;
-        wolfStats[ALPHA].currentSPD = 100;
+        wolfStats[ALPHA].baseDEF = 15;
+        wolfStats[ALPHA].currentDEF = 15;
+        wolfStats[ALPHA].baseSPD = 4;
+        wolfStats[ALPHA].currentSPD = 4;
         wolfStats[ALPHA].baseCRIT = 0;
         wolfStats[ALPHA].currentCRIT = 0;
 
@@ -51,10 +51,10 @@ public class GameData : MonoBehaviour {
         wolfStats[CAUTION].currentHunger = 100;
         wolfStats[CAUTION].baseATK = 50;
         wolfStats[CAUTION].currentATK = 50;
-        wolfStats[CAUTION].baseDEF = 100;
-        wolfStats[CAUTION].currentDEF = 100;
-        wolfStats[CAUTION].baseSPD = 100;
-        wolfStats[CAUTION].currentSPD = 100;
+        wolfStats[CAUTION].baseDEF = 10;
+        wolfStats[CAUTION].currentDEF = 10;
+        wolfStats[CAUTION].baseSPD = 7;
+        wolfStats[CAUTION].currentSPD = 7;
         wolfStats[CAUTION].baseCRIT = 0;
         wolfStats[CAUTION].currentCRIT = 0;
 
@@ -66,10 +66,10 @@ public class GameData : MonoBehaviour {
         wolfStats[HYPER].currentHunger = 100;
         wolfStats[HYPER].baseATK = 50;
         wolfStats[HYPER].currentATK = 50;
-        wolfStats[HYPER].baseDEF = 100;
-        wolfStats[HYPER].currentDEF = 100;
-        wolfStats[HYPER].baseSPD = 100;
-        wolfStats[HYPER].currentSPD = 100;
+        wolfStats[HYPER].baseDEF = 10;
+        wolfStats[HYPER].currentDEF = 10;
+        wolfStats[HYPER].baseSPD = 3;
+        wolfStats[HYPER].currentSPD = 3;
         wolfStats[HYPER].baseCRIT = 0;
         wolfStats[HYPER].currentCRIT = 0;
 

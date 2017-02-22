@@ -53,4 +53,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: Frenzy
   moveDescription: 'Multi-hit claw that has a chance to crit '
-  moveValue: 800
+  moveValue: 20
+  allyTargeted: 0
