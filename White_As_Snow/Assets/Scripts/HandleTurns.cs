@@ -10,6 +10,8 @@ public class HandleTurns {
     public GameObject AttackersTarget; //GameObject of attacker's target
 
     //Later: what attack is being performed
-
+    public BaseAttack chosenMove;
+    //Is this attack friendly (ally-targeted) or hostlie (enemy-targeted)?
+    public bool hostileAttack;
 	
 }

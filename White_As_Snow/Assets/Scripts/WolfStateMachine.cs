@@ -6,6 +6,8 @@ public class WolfStateMachine : MonoBehaviour {
 
     private BattleStateMachine BSM;
     public WolfCombat wolf;
+    private GameData gameData;
+
 
     public enum TurnState
     {
@@ -22,30 +24,40 @@ public class WolfStateMachine : MonoBehaviour {
     private float max_cooldown = 5f;
     private float max_size = 3f; //largest size the ATB gague should grow to
 
-    private float animSpeed = 10f;
-
     public GameObject waitBar;
+    public GameObject healthBar;
     public GameObject selector;
 
     //IEnumerator for Combat Movement
     public GameObject EnemyToAttack;
+    public bool isHostile;
     private bool actionStarted = false;
     private Vector3 startPosition;
+    private float animSpeed = 10f;
 
-    void Start () {
+    //Wolf death
+    private bool alive = true;
+
+    void Start() {
+        gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+
         startPosition = transform.position;
 
         cur_cooldown = Random.Range(0, 2.5f); //If one class (Hyper) should use his crit/hunger to start attacking first
+        healthBar = this.transform.FindChild("health_bar").gameObject;
         waitBar = this.transform.FindChild("wait_fill").gameObject;
         selector = this.transform.FindChild("selector").gameObject;
+
         selector.SetActive(false);
+
+        UpdateHealthBar();
 
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         currentState = TurnState.PROCESSING;
-	}
-	
-	void Update () {
-		switch(currentState)
+    }
+
+    void Update() {
+        switch (currentState)
         {
             case (TurnState.PROCESSING):
                 UpdateProgressBar();
@@ -62,17 +74,52 @@ public class WolfStateMachine : MonoBehaviour {
                 break;
             case (TurnState.DEAD):
 
+                if (!alive)
+                {
+                    return;
+                }
+                else
+                {
+                    //change tag
+                    this.gameObject.tag = "deadwolf";
+                    //not attackable by enemy
+                    BSM.WolvesInBattle.Remove(this.gameObject);
+                    //not managable by player
+                    BSM.WolvesToManage.Remove(this.gameObject);
+                    //deactivate selector
+                    selector.SetActive(false);
+
+                    //remove from PerformList
+                    for (int i = 0; i < BSM.PerformList.Count; i++)
+                    {
+                        if (BSM.PerformList[i].AttackerGameObject == this.gameObject)
+                        {
+                            BSM.PerformList.Remove(BSM.PerformList[i]);
+                        }
+                    }
+                    //change color / [later] play death animation to signify dead wolf
+                    this.gameObject.GetComponent<SpriteRenderer>().color = new Color32(105, 105, 105, 255);
+                    //reset wolfinput
+                    BSM.WolfInput = BattleStateMachine.WolfGUI.ACTIVATE;
+                    alive = false;
+                }
                 break;
         }
-	}
+    }
 
     void UpdateProgressBar()
     {
         cur_cooldown += Time.deltaTime;
         float calc_cooldown = cur_cooldown / max_cooldown;
-        waitBar.transform.localScale = new Vector2(Mathf.Clamp(calc_cooldown, 0, 1)*max_size, waitBar.transform.localScale.y);
+        waitBar.transform.localScale = new Vector2(Mathf.Clamp(calc_cooldown, 0, 1) * max_size, waitBar.transform.localScale.y);
         if (cur_cooldown >= max_cooldown)
             currentState = TurnState.ADDTOLIST;
+    }
+
+    void UpdateHealthBar()
+    {
+        float calc_health = wolf.currentHP / wolf.baseHP;
+        healthBar.transform.localScale = new Vector2(Mathf.Clamp(calc_health, 0, 1) * max_size, healthBar.transform.localScale.y);
 
     }
     private IEnumerator TimeForAction()
@@ -84,7 +131,10 @@ public class WolfStateMachine : MonoBehaviour {
         actionStarted = true;
 
         //animate the wolf to move to the wolf to attack
-        Vector3 enemyPosition = new Vector3(EnemyToAttack.transform.position.x + 3.7f, EnemyToAttack.transform.position.y, EnemyToAttack.transform.position.z);
+        Vector3 enemyPosition;
+        if (isHostile) enemyPosition = new Vector3(EnemyToAttack.transform.position.x + 3.7f, EnemyToAttack.transform.position.y, EnemyToAttack.transform.position.z);
+        else enemyPosition = new Vector3(EnemyToAttack.transform.position.x - 3.7f, EnemyToAttack.transform.position.y, EnemyToAttack.transform.position.z);
+
         while (MoveTowardsTarget(enemyPosition))
         {
             //waits until MoveTowardsEnemy returns
@@ -95,6 +145,8 @@ public class WolfStateMachine : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
 
         //deal damage
+        if (isHostile) doDamage();
+        else handleFriendly();
 
         //animate back to start position
         Vector3 firstPosition = startPosition;
@@ -104,6 +156,36 @@ public class WolfStateMachine : MonoBehaviour {
             yield return null;
         }
 
+        endMove();
+    }
+    private IEnumerator ResetDiveDef()
+    {
+        yield return new WaitForSeconds(5.5f);
+        EnemyToAttack.GetComponent<WolfStateMachine>().wolf.currentDEF = EnemyToAttack.GetComponent<WolfStateMachine>().wolf.baseDEF;
+        EnemyToAttack.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
+    }
+    private bool MoveTowardsTarget(Vector3 target)
+    {
+        return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
+    }
+    public void takeDamage(float incomingDamage)
+    {
+        wolf.currentHP -= incomingDamage * (10 / wolf.currentDEF);
+        if (wolf.currentHP <= 0)
+        {
+            currentState = TurnState.DEAD;
+        }
+        UpdateHealthBar();
+    }
+
+    void doDamage()
+    {
+        float calc_damage = wolf.currentATK + BSM.PerformList[0].chosenMove.moveValue;
+        EnemyToAttack.GetComponent<EnemyStateMachine>().takeDamage(calc_damage);
+    }
+
+    public void endMove()
+    {
         //remove this attacker from the BSM list
         BSM.PerformList.RemoveAt(0);
 
@@ -115,8 +197,34 @@ public class WolfStateMachine : MonoBehaviour {
         cur_cooldown = 0f;
         currentState = TurnState.PROCESSING;
     }
-    private bool MoveTowardsTarget(Vector3 target)
+
+    public void receiveItemHealing(float healValue, float hungerValue)
     {
-        return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
+        wolf.currentHunger = Mathf.Min(wolf.currentHunger + hungerValue, wolf.baseHunger);
+        receiveHealing(healValue);
+    }
+
+    public void receiveHealing(float healValue)
+    {
+        wolf.currentHP = Mathf.Min(wolf.currentHP + healValue, wolf.baseHP);
+        UpdateHealthBar();
+    }
+
+    void handleFriendly()
+    //The method assumes that each wolf only has one friendly-targted ability.
+    {
+        if (wolf.name == "Alpha")
+        {
+            EnemyToAttack.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 102, 255);
+            EnemyToAttack.GetComponent<WolfStateMachine>().wolf.currentDEF = 9000;
+            StartCoroutine(ResetDiveDef());
+        }
+        if (wolf.name == "Caution")
+        {
+            EnemyToAttack.GetComponent<WolfStateMachine>().receiveHealing(BSM.PerformList[0].chosenMove.moveValue);
+        }
     }
 }
+
+
+

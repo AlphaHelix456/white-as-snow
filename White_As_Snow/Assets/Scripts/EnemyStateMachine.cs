@@ -19,7 +19,9 @@ public class EnemyStateMachine : MonoBehaviour {
 
     private float cur_cooldown = 0f;
     private float max_cooldown = 5f;
-    private float max_size = 3f;
+    private float max_size = 3.18f;
+
+    public GameObject healthBar;
 
     private Vector2 startPosition;
     //Timeforaction
@@ -30,6 +32,9 @@ public class EnemyStateMachine : MonoBehaviour {
     
 
     void Start () {
+        healthBar = this.transform.FindChild("health_bar").gameObject;
+        UpdateHealthBar();
+
         currentState = TurnState.PROCESSING;
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         startPosition = transform.position;
@@ -54,7 +59,6 @@ public class EnemyStateMachine : MonoBehaviour {
                 StartCoroutine(TimeForAction());
                 break;
             case (TurnState.DEAD):
-
                 break;
         }
     }
@@ -75,9 +79,10 @@ public class EnemyStateMachine : MonoBehaviour {
         myAttack.Attacker = enemy.name;
         myAttack.Type = "enemy";
         myAttack.AttackerGameObject = this.gameObject;
-        //CHANGE THIS FOR DYANMIC AI (BASED ON LOWEST HP, HEALER, THREAT, ETC.)
-        myAttack.AttackersTarget = BSM.WolvesInBattle[Random.Range(0, BSM.WolvesInBattle.Count)];
-        
+        myAttack.AttackersTarget = BSM.WolvesInBattle[Random.Range(0, BSM.WolvesInBattle.Count)]; //CHANGE THIS FOR DYANMIC AI (BASED ON LOWEST HP, HEALER, THREAT, ETC.)
+
+        int num = Random.Range(0, enemy.availableAttacks.Count);
+        myAttack.chosenMove = enemy.availableAttacks[num];
 
         BSM.CollectActions(myAttack);
     }
@@ -102,6 +107,7 @@ public class EnemyStateMachine : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
 
         //deal damage
+        doDamage();
 
         //animate back to start position
         Vector3 firstPosition = startPosition;
@@ -126,10 +132,24 @@ public class EnemyStateMachine : MonoBehaviour {
     {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
-    /*
-    private bool MoveTowardsStart(Vector3 target)
+    void UpdateHealthBar()
     {
-        return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
+        float calc_health = enemy.currentHP / enemy.baseHP;
+        healthBar.transform.localScale = new Vector2(Mathf.Clamp(calc_health, 0, 1) * max_size, healthBar.transform.localScale.y);
+
     }
-    */
+    public void takeDamage(float incomingDamage)
+    {
+        enemy.currentHP -= incomingDamage;
+        if (enemy.currentHP <= 0)
+        {
+            currentState = TurnState.DEAD;
+        }
+        UpdateHealthBar();
+    }
+    void doDamage()
+    {
+        float calc_damage = enemy.currentATK + BSM.PerformList[0].chosenMove.moveValue;
+        WolfToAttack.GetComponent<WolfStateMachine>().takeDamage(calc_damage);
+    }
 }

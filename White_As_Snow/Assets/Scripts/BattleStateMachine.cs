@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class BattleStateMachine : MonoBehaviour
 {
+    private GameData gameData;
 
     public enum PerformAction
     {
@@ -18,7 +19,8 @@ public class BattleStateMachine : MonoBehaviour
     public PerformAction battleStates;
 
     public List<HandleTurns> PerformList = new List<HandleTurns>();
-    public List<GameObject> WolvesInBattle = new List<GameObject>(); // to be updated on death
+    public List<GameObject> WolvesInBattle = new List<GameObject>();
+    public List<GameObject> WolvesOrderedByDataIndex;
     public List<GameObject> EnemiesInBattle = new List<GameObject>();
 
     public enum WolfGUI
@@ -31,7 +33,7 @@ public class BattleStateMachine : MonoBehaviour
     }
 
     public WolfGUI WolfInput;
-    public List<GameObject> WolvesToManage = new List<GameObject>();
+    public List<GameObject> WolvesToManage = new List<GameObject>(); //Wolves that are ready to attack
     private HandleTurns WolfChoice;
 
     public GameObject enemyButton;
@@ -43,23 +45,28 @@ public class BattleStateMachine : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         CombatUI = GameObject.Find("CombatUIController").GetComponent<CombatUIController>();
+        loadStats();
+
         battleStates = PerformAction.WAIT;
         WolvesInBattle.AddRange(GameObject.FindGameObjectsWithTag("wolf"));
         EnemiesInBattle.AddRange(GameObject.FindGameObjectsWithTag("enemy"));
+
+        foreach (GameObject wolf in WolvesInBattle)
+        {
+            WolvesOrderedByDataIndex.Add(wolf);
+        }
+        WolvesOrderedByDataIndex.Sort((x, y) => x.GetComponent<WolfStateMachine>().wolf.name.CompareTo(y.GetComponent<WolfStateMachine>().wolf.name));
+
         WolfInput = WolfGUI.ACTIVATE;
-
-
-        //AttackPanel.SetActive(false);
-
     }
 
     // Update is called once per frame
     void Update()
     {
         switch (battleStates)
-        {       
+        {
             case (PerformAction.WAIT):
                 if (PerformList.Count > 0)
                 {
@@ -75,14 +82,28 @@ public class BattleStateMachine : MonoBehaviour
                 if (PerformList[0].Type == "enemy")
                 {
                     EnemyStateMachine ESM = performer.GetComponent<EnemyStateMachine>();
-                    ESM.WolfToAttack = PerformList[0].AttackersTarget;
-                    ESM.currentState = EnemyStateMachine.TurnState.ACTION;
+                    for (int i = 0; i < WolvesInBattle.Count; i++) //allows support for group battles (multi vs multi)
+                    {
+                        if (PerformList[0].AttackersTarget == WolvesInBattle[i])
+                        {
+                            ESM.WolfToAttack = PerformList[0].AttackersTarget;
+                            ESM.currentState = EnemyStateMachine.TurnState.ACTION;
+                            break;
+                        }
+                        else
+                        {
+                            PerformList[0].AttackersTarget = WolvesInBattle[Random.Range(0, WolvesInBattle.Count)]; //or whatever selection AI used in the future
+                            ESM.WolfToAttack = PerformList[0].AttackersTarget;
+                            ESM.currentState = EnemyStateMachine.TurnState.ACTION;
+                        }
+                    }
                 }
                 if (PerformList[0].Type == "wolf")
                 {
-                    WolfStateMachine HSM = performer.GetComponent<WolfStateMachine>();
-                    HSM.EnemyToAttack = PerformList[0].AttackersTarget;
-                    HSM.currentState = WolfStateMachine.TurnState.ACTION;
+                    WolfStateMachine WSM = performer.GetComponent<WolfStateMachine>();
+                    WSM.EnemyToAttack = PerformList[0].AttackersTarget;
+                    WSM.isHostile = PerformList[0].hostileAttack;
+                    WSM.currentState = WolfStateMachine.TurnState.ACTION;
                 }
                 battleStates = PerformAction.PERFORMACTION;
                 break;
@@ -134,40 +155,18 @@ public class BattleStateMachine : MonoBehaviour
         PerformList.Add(input);
     }
 
-    void EnemyButtons()
-    {
-        /*
-        foreach (GameObject enemy in EnemiesInBattle)
-        {
-            GameObject newButton = Instantiate(enemyButton) as GameObject; //Find enemy buttons as prefab
-            EnemySelectButton button = newButton.GetComponent<EnemySelectButton>();
-            EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
-
-            Text buttonText = newButton.transform.FindChild("Text").gameObject.GetComponent<Text>();
-            buttonText.text = cur_enemy.enemy.name;
-
-            button.EnemyPrefab = enemy;
-            newButton.transform.SetParent(EnemySelectPanel.transform,false);
-        }
-        */
-    }
-
-    public void Input1() //attack choice in the UI
+    public void Input1(int attackIndex) //attack choice in the UI
     {
         WolfChoice.Attacker = WolvesToManage[0].name;
         WolfChoice.AttackerGameObject = WolvesToManage[0];
         WolfChoice.Type = "wolf";
-
-        //AttackPanel.SetActive(false); //after choosing, disable attack panel on the right
-        //EnemySelectPanel.SetActive(true); //and enable the enemy's panel on the left
-
+        WolfChoice.chosenMove = WolvesToManage[0].GetComponent<WolfStateMachine>().wolf.availableAttacks[attackIndex];
     }
 
-    public void Input2(GameObject chosenEnemy) //Enemy selection
+    public void Input2(GameObject chosenEnemy, bool isHostile) //Enemy selection
     {
         WolfChoice.AttackersTarget = chosenEnemy;
-
-        //WolfInput = WolfGUI.DONE;
+        WolfChoice.hostileAttack = isHostile;
     }
 
     void WolfInputDone()
@@ -176,5 +175,25 @@ public class BattleStateMachine : MonoBehaviour
         WolvesToManage[0].transform.FindChild("selector").gameObject.SetActive(false); //Indicator disappears in-game
         WolvesToManage.RemoveAt(0); //Cycle into the next wolf's input handling
         WolfInput = WolfGUI.ACTIVATE;
+    }
+    void loadStats()
+    {
+        WolfCombat currentData;
+        for (int i = 0; i < WolvesOrderedByDataIndex.Count; i++)
+        {
+            currentData = gameData.getWolfStats(i);
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.name = currentData.name;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.baseHP = currentData.baseHP;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentHP = currentData.currentHP;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.baseATK = currentData.baseATK;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentATK = currentData.currentATK;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.baseDEF = currentData.baseDEF;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentDEF = currentData.currentDEF;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.baseSPD = currentData.baseSPD;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentSPD = currentData.currentSPD;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.baseCRIT = currentData.baseCRIT;
+            WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentCRIT = currentData.currentCRIT;
+
+        }
     }
 }

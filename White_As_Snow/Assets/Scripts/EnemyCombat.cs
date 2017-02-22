@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyCombat
 {
-    new public string name;
+    public string name;
 
     public enum Encounter
     {
@@ -29,5 +29,7 @@ public class EnemyCombat
 
     public float baseCRIT;
     public float currentCRIT;
+
+    public List<BaseAttack> availableAttacks = new List<BaseAttack>();
 
 }

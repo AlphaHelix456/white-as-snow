@@ -45,8 +45,8 @@ public class GameData : MonoBehaviour {
 
         wolfStats[1] = new WolfCombat();
         wolfStats[CAUTION].name = "Caution";
-        wolfStats[CAUTION].baseHP = 300;
-        wolfStats[CAUTION].currentHP = 300;
+        wolfStats[CAUTION].baseHP = 200;
+        wolfStats[CAUTION].currentHP = 200;
         wolfStats[CAUTION].baseHunger = 100;
         wolfStats[CAUTION].currentHunger = 100;
         wolfStats[CAUTION].baseATK = 50;

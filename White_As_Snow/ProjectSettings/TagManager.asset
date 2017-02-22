@@ -8,6 +8,12 @@ TagManager:
   - wolf
   - Back
   - GameData
+  - deadwolf
+  - deadenemy
+  - Attack 0
+  - Attack 1
+  - Attack 2
+  - Attack 3
   layers:
   - Default
   - TransparentFX

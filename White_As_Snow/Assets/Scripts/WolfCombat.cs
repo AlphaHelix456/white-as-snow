@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class WolfCombat
 {
-    new public string name;
+    public string name;
 
     public float baseHP;
     public float currentHP;
@@ -24,5 +24,5 @@ public class WolfCombat
     public float baseCRIT;
     public float currentCRIT;
 
-  
+    public List<BaseAttack> availableAttacks = new List<BaseAttack>();
 }
