@@ -9,11 +9,29 @@ public class WolfAnimate : MonoBehaviour {
     private SpriteRenderer sr;
     private bool moving = false;
     private bool changeAnim = false;
+    private string idleAnim;
+    private string runAnim;
+    private string name;
 
 	// Use this for initialization
 	void Start () {
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        switch(gameObject.name)
+        {
+            case "wolf":
+                idleAnim = "Wolf1Idle";
+                runAnim = "WolfRunLeft";
+                break;
+            case "follower1":
+                idleAnim = "Wolf2Idle";
+                runAnim = "Wolf2RunLeft";
+                break;
+            case "follower2":
+                idleAnim = "Wolf3Idle";
+                runAnim = "Wolf3RunLeft";
+                break;
+        }
     }
 	
 	// Update is called once per frame
@@ -35,8 +53,8 @@ public class WolfAnimate : MonoBehaviour {
 
     private void changeAnims()
     {
-        if (moving) wolfAnimator.Play("WolfRunLeft");
-        else wolfAnimator.Play("Wolf1Idle");
+        if (moving) wolfAnimator.Play(runAnim);
+        else wolfAnimator.Play(idleAnim);
         changeAnim = false;
     }
 }
