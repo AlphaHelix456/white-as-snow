@@ -81,6 +81,11 @@ public class InventoryMenuController : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
+        if(eventSystem.currentSelectedGameObject != null)
+        {
+            print(eventSystem.currentSelectedGameObject.name);
+
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (menuState == NOT_IN_MENU)
