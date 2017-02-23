@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleSceneChanger : MonoBehaviour {
 
@@ -16,7 +17,7 @@ public class BattleSceneChanger : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D c) {
         if(c.gameObject.tag == "wolf") {
-            Application.LoadLevel("JakeSmith");
+            SceneManager.LoadScene("JakeSmith");
         }
     }
 }

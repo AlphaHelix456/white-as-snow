@@ -17,7 +17,8 @@ public class WolfAnimate : MonoBehaviour {
 	void Start () {
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
-        switch(gameObject.name)
+        startRunning();
+        switch (gameObject.name)
         {
             case "wolf":
                 idleAnim = "Wolf1Idle";
@@ -57,4 +58,16 @@ public class WolfAnimate : MonoBehaviour {
         else wolfAnimator.Play(idleAnim);
         changeAnim = false;
     }
+    void startRunning()
+    {
+        rb.velocity = new Vector2(.05f, 0);
+        StartCoroutine(stopRunning());
+    }
+    IEnumerator stopRunning()
+    {
+        yield return new WaitForSeconds(0.02f);
+        rb.velocity = new Vector2(0, 0);
+
+    }
+
 }

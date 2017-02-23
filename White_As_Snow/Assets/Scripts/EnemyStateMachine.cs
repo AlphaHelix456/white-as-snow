@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyStateMachine : MonoBehaviour {
 
@@ -19,7 +20,7 @@ public class EnemyStateMachine : MonoBehaviour {
 
     private float cur_cooldown = 0f;
     private float max_cooldown = 5f;
-    private float max_size = 3.18f;
+    private float max_size = 1.27f;
 
     public GameObject healthBar;
 
@@ -27,6 +28,8 @@ public class EnemyStateMachine : MonoBehaviour {
     //Timeforaction
     private bool actionStarted = false;
     public GameObject WolfToAttack;
+    private bool alive = true;
+
     //Speed to walk to the target
     private float animSpeed = 10f;
     
@@ -34,6 +37,7 @@ public class EnemyStateMachine : MonoBehaviour {
     void Start () {
         healthBar = this.transform.FindChild("health_bar").gameObject;
         UpdateHealthBar();
+        max_cooldown = enemy.currentSPD;
 
         currentState = TurnState.PROCESSING;
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
@@ -59,6 +63,32 @@ public class EnemyStateMachine : MonoBehaviour {
                 StartCoroutine(TimeForAction());
                 break;
             case (TurnState.DEAD):
+                if (!alive)
+                {
+                    return;
+                }
+                else
+                {
+                    //change tag
+                    this.gameObject.tag = "deadwolf";
+                    //not attackable by enemy
+                    BSM.EnemiesInBattle.Remove(this.gameObject);
+
+                    //remove from PerformList
+                    for (int i = 0; i < BSM.PerformList.Count; i++)
+                    {
+                        if (BSM.PerformList[i].AttackerGameObject == this.gameObject)
+                        {
+                            BSM.PerformList.Remove(BSM.PerformList[i]);
+                        }
+                    }
+                    //change color / [later] play death animation to signify dead enemy
+                    this.gameObject.GetComponent<SpriteRenderer>().color = new Color32(105, 105, 105, 255);
+
+                    alive = false;
+                    StartCoroutine(EndingSequence());
+
+                }
                 break;
         }
     }
@@ -140,7 +170,7 @@ public class EnemyStateMachine : MonoBehaviour {
     }
     public void takeDamage(float incomingDamage)
     {
-        enemy.currentHP -= incomingDamage;
+        enemy.currentHP -= Mathf.Floor(incomingDamage * (10 / enemy.currentDEF));
         if (enemy.currentHP <= 0)
         {
             currentState = TurnState.DEAD;
@@ -151,5 +181,12 @@ public class EnemyStateMachine : MonoBehaviour {
     {
         float calc_damage = enemy.currentATK + BSM.PerformList[0].chosenMove.moveValue;
         WolfToAttack.GetComponent<WolfStateMachine>().takeDamage(calc_damage);
+    }
+    IEnumerator EndingSequence()
+    {
+        BSM.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(6.5f);
+        SceneManager.LoadScene("World");
+
     }
 }
