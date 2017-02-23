@@ -18,20 +18,21 @@ public class WolfAnimate : MonoBehaviour {
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         startRunning();
-        switch (gameObject.name)
+        name = gameObject.name;
+        if (name == "wolf" || name == "Alpha")
         {
-            case "wolf":
-                idleAnim = "Wolf1Idle";
-                runAnim = "WolfRunLeft";
-                break;
-            case "follower1":
-                idleAnim = "Wolf2Idle";
-                runAnim = "Wolf2RunLeft";
-                break;
-            case "follower2":
-                idleAnim = "Wolf3Idle";
-                runAnim = "Wolf3RunLeft";
-                break;
+            idleAnim = "Wolf1Idle";
+            runAnim = "WolfRunLeft";
+        }
+        else if (name == "follower1" || name == "Hyper")
+        {
+            idleAnim = "Wolf2Idle";
+            runAnim = "Wolf2RunLeft";
+        }
+        else if (name == "follower2" || name == "Caution")
+        {
+            idleAnim = "Wolf3Idle";
+            runAnim = "Wolf3RunLeft";
         }
     }
 	
