@@ -1237,6 +1237,7 @@ GameObject:
   - component: {fileID: 603057433}
   - component: {fileID: 603057432}
   - component: {fileID: 603057431}
+  - component: {fileID: 603057434}
   m_Layer: 0
   m_Name: Hyper
   m_TagString: wolf
@@ -1330,6 +1331,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &603057434
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 603057430}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ce16a528268701343a433b6ebbef1636, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &628355043
 Prefab:
   m_ObjectHideFlags: 0
@@ -2041,8 +2059,8 @@ MonoBehaviour:
   enemy:
     name: Elk
     EncounterType: 0
-    baseHP: 300
-    currentHP: 300
+    baseHP: 1500
+    currentHP: 1500
     baseATK: 10
     currentATK: 10
     baseDEF: 10
@@ -3595,7 +3613,7 @@ Animator:
   m_GameObject: {fileID: 1835197355}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2e3b35099bf62594aad3ff4ff979d8a2, type: 2}
+  m_Controller: {fileID: 9100000, guid: d058cfb99e7701c4190cbe3b6b4cfa44, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3932,6 +3950,7 @@ GameObject:
   - component: {fileID: 1909820698}
   - component: {fileID: 1909820697}
   - component: {fileID: 1909820696}
+  - component: {fileID: 1909820699}
   m_Layer: 0
   m_Name: Caution
   m_TagString: wolf
@@ -4025,6 +4044,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1909820699
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1909820695}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 52bd84ed3fa267a4795f32796420a41c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1931882598
 GameObject:
   m_ObjectHideFlags: 0
