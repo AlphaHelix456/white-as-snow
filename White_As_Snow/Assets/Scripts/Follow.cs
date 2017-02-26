@@ -5,6 +5,7 @@ using UnityEngine;
 public class Follow : MonoBehaviour
 {
 
+<<<<<<< HEAD
     private readonly float START_D = 6.5f;
     private readonly float STOP_D = 5f; //When the wolves will stop walking
     private readonly float MIN_D = 2.5f; //Wolves must stay at least this distance apart
@@ -27,6 +28,21 @@ public class Follow : MonoBehaviour
         player = GameObject.Find("wolf");
         needsToMove = false;
         adjusting = false;
+=======
+    private readonly float START_D = 7.1f;
+    private readonly float MIN_D = 5.5f;
+    private readonly float SPEED = 4.5f;
+    private GameObject player;
+    private GameObject otherFollower;
+    private Rigidbody2D rb;
+    private bool moving;
+    private float angle;
+
+    void Start()
+    {
+        player = GameObject.Find("wolf");
+        moving = false;
+>>>>>>> master
         rb = GetComponent<Rigidbody2D>();
         if (gameObject.name == "follower1")
         {
@@ -40,6 +56,7 @@ public class Follow : MonoBehaviour
 
     void FixedUpdate()
     {
+<<<<<<< HEAD
         if (adjusting)
         {
             if (getDist(otherFollower) >= MIN_D_SOFT)
@@ -90,6 +107,40 @@ public class Follow : MonoBehaviour
                 {
                     rb.velocity = new Vector2(0, 0);
                     otherFollower.SendMessage("adjust");
+=======
+        if (!moving && toMove())
+        {
+            moving = true;
+        }
+
+        if (moving)
+        {
+            angle = getAngle();
+            if (angle < 67.5f)
+            {
+                if (getXDiff() > 0) //If the follower is to the right of the player
+                {
+                    //Move left
+                    rb.velocity = new Vector2(-SPEED, rb.velocity.y);
+                }
+                else
+                {
+                    //Move right
+                    rb.velocity = new Vector2(SPEED, rb.velocity.y);
+                }
+            }
+            else if (angle > 22.5f)
+            {
+                if (getYDiff() > 0) //If the follower is above the player
+                {
+                    //Move down
+                    rb.velocity = new Vector2(rb.velocity.x, -SPEED);
+                }
+                else
+                {
+                    //Move up
+                    rb.velocity = new Vector2(rb.velocity.x, SPEED);
+>>>>>>> master
                 }
             }
         }
@@ -98,13 +149,18 @@ public class Follow : MonoBehaviour
 
     private bool toMove()
     {
+<<<<<<< HEAD
         if (getDist(player) > START_D)
+=======
+        if (getDist() > START_D)
+>>>>>>> master
         {
             return true;
         }
         else return false;
     }
 
+<<<<<<< HEAD
     private float getDist(GameObject target)
     {
         return (this.transform.position - target.transform.position).magnitude;
@@ -236,3 +292,25 @@ public class Follow : MonoBehaviour
         }
     }
 }
+=======
+    private float getDist()
+    {
+        return (this.transform.position - player.transform.position).magnitude;
+    }
+
+    private float getAngle() //Returns the angle measured counterclockwise from the x-axis.
+    {
+        return Mathf.Acos(Mathf.Abs(getXDiff()) / getDist()) * 180 / Mathf.PI;
+    }
+
+    private float getXDiff()
+    {
+        return this.transform.position.x - player.transform.position.x;
+    }
+
+    private float getYDiff()
+    {
+        return this.transform.position.y - player.transform.position.y;
+    }
+}
+>>>>>>> master

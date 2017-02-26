@@ -106,7 +106,7 @@ public class EnemyStateMachine : MonoBehaviour {
     void ChooseAction()
     {
         HandleTurns myAttack = new HandleTurns();
-        myAttack.Attacker = enemy.name;
+        myAttack.Attacker = enemy.theName;
         myAttack.Type = "enemy";
         myAttack.AttackerGameObject = this.gameObject;
         myAttack.AttackersTarget = BSM.WolvesInBattle[Random.Range(0, BSM.WolvesInBattle.Count)]; //CHANGE THIS FOR DYANMIC AI (BASED ON LOWEST HP, HEALER, THREAT, ETC.)
