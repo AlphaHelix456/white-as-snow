@@ -155,27 +155,7 @@ public class BattleStateMachine : MonoBehaviour
         PerformList.Add(input);
     }
 
-<<<<<<< HEAD:White_As_Snow/Assets/Scripts/BattleStateMachine.cs
     public void Input1(int attackIndex) //attack choice in the UI
-=======
-    void EnemyButtons()
-    {
-        foreach (GameObject enemy in EnemiesInBattle)
-        {
-            GameObject newButton = Instantiate(enemyButton) as GameObject; //Find enemy buttons as prefab
-            EnemySelectButton button = newButton.GetComponent<EnemySelectButton>();
-            EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
-
-            Text buttonText = newButton.transform.FindChild("Text").gameObject.GetComponent<Text>();
-            buttonText.text = cur_enemy.enemy.theName;
-
-            button.EnemyPrefab = enemy;
-            newButton.transform.SetParent(EnemySelectPanel.transform,false);
-        }
-    }
-
-    public void Input1() //attack choice in the UI
->>>>>>> master:White_As_Snow/Assets/Scripts/Combat State Machines/BattleStateMachine.cs
     {
         WolfChoice.Attacker = WolvesToManage[0].name;
         WolfChoice.AttackerGameObject = WolvesToManage[0];
