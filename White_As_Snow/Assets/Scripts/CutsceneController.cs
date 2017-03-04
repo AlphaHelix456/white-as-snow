@@ -35,10 +35,9 @@ public class CutsceneController : MonoBehaviour {
 
             if (cutsceneInstructions.Count > 0)
             {
-                if (cutsceneInstructions[0] == null)
-                {
-                    cutsceneInstructions = buildCutsceneInstructions(currentCutscene);
-                }
+                
+                cutsceneInstructions = buildCutsceneInstructions(currentCutscene);
+           
 
                 int index = 0;
                 while(index < cutsceneInstructions.Count)
