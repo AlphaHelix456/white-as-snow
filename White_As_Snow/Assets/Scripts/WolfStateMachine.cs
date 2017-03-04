@@ -46,7 +46,6 @@ public class WolfStateMachine : MonoBehaviour {
         healthBar = this.transform.FindChild("health_bar").gameObject;
         waitBar = this.transform.FindChild("wait_fill").gameObject;
         selector = this.transform.FindChild("selector").gameObject;
-        print(wolf.currentSPD);
         max_cooldown = wolf.currentSPD;
 
         selector.SetActive(false);
@@ -165,6 +164,18 @@ public class WolfStateMachine : MonoBehaviour {
         EnemyToAttack.GetComponent<WolfStateMachine>().wolf.currentDEF = EnemyToAttack.GetComponent<WolfStateMachine>().wolf.baseDEF;
         EnemyToAttack.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
     }
+    private IEnumerator HitFrame()
+    {
+        this.GetComponent<SpriteRenderer>().color = new Color32(200, 0, 0, 255);
+        yield return new WaitForSeconds(.2f);
+        this.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
+    }
+    private IEnumerator HealFrame()
+    {
+        this.GetComponent<SpriteRenderer>().color = new Color32(153, 255, 153, 255);
+        yield return new WaitForSeconds(.2f);
+        this.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
+    }
     private bool MoveTowardsTarget(Vector3 target)
     {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
@@ -175,6 +186,10 @@ public class WolfStateMachine : MonoBehaviour {
         if (wolf.currentHP <= 0)
         {
             currentState = TurnState.DEAD;
+        }
+        else
+        {
+            StartCoroutine(HitFrame());
         }
         UpdateHealthBar();
     }
@@ -208,19 +223,20 @@ public class WolfStateMachine : MonoBehaviour {
     public void receiveHealing(float healValue)
     {
         wolf.currentHP = Mathf.Min(wolf.currentHP + healValue, wolf.baseHP);
+        StartCoroutine(HealFrame());
         UpdateHealthBar();
     }
 
     void handleFriendly()
     //The method assumes that each wolf only has one friendly-targted ability.
     {
-        if (wolf.name == "Alpha")
+        if (wolf.name == "Fen")
         {
             EnemyToAttack.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 102, 255);
             EnemyToAttack.GetComponent<WolfStateMachine>().wolf.currentDEF = 9000;
             StartCoroutine(ResetDiveDef());
         }
-        if (wolf.name == "Caution")
+        if (wolf.name == "Lycia")
         {
             EnemyToAttack.GetComponent<WolfStateMachine>().receiveHealing(BSM.PerformList[0].chosenMove.moveValue);
         }

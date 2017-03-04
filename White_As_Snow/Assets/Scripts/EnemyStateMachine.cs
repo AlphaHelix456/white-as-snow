@@ -92,6 +92,21 @@ public class EnemyStateMachine : MonoBehaviour {
                 break;
         }
     }
+
+    private IEnumerator HitFrame()
+    {
+        this.GetComponent<SpriteRenderer>().color = new Color32(200, 0, 0, 255);
+        yield return new WaitForSeconds(.2f);
+        this.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
+    }
+
+    private IEnumerator HealFrame()
+    {
+        this.GetComponent<SpriteRenderer>().color = new Color32(0, 180, 0, 255);
+        yield return new WaitForSeconds(.2f);
+        this.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
+    }
+
     void UpdateProgressBar()
     {
         //Updates an inisible ATB progress bar for enemies
@@ -174,6 +189,10 @@ public class EnemyStateMachine : MonoBehaviour {
         if (enemy.currentHP <= 0)
         {
             currentState = TurnState.DEAD;
+        }
+        else
+        {
+            StartCoroutine(HitFrame());
         }
         UpdateHealthBar();
     }

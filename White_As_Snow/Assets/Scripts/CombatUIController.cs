@@ -151,6 +151,10 @@ public class CombatUIController : MonoBehaviour {
                 }
                 row = 0;
             }
+            if (menuState == chooseAttack)
+            {
+
+            }
         }
 
     }
