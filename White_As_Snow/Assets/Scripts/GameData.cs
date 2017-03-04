@@ -29,7 +29,7 @@ public class GameData : MonoBehaviour {
         }
         wolfStats = new WolfCombat[3];
         wolfStats[0] = new WolfCombat();
-        wolfStats[ALPHA].name = "Alpha";
+        wolfStats[ALPHA].name = "Fen";
         wolfStats[ALPHA].baseHP = 300;
         wolfStats[ALPHA].currentHP = 300;
         wolfStats[ALPHA].baseHunger = 100;
@@ -44,7 +44,7 @@ public class GameData : MonoBehaviour {
         wolfStats[ALPHA].currentCRIT = 0;
 
         wolfStats[1] = new WolfCombat();
-        wolfStats[CAUTION].name = "Caution";
+        wolfStats[CAUTION].name = "Lycia";
         wolfStats[CAUTION].baseHP = 200;
         wolfStats[CAUTION].currentHP = 200;
         wolfStats[CAUTION].baseHunger = 100;
@@ -59,7 +59,7 @@ public class GameData : MonoBehaviour {
         wolfStats[CAUTION].currentCRIT = 0;
 
         wolfStats[2] = new WolfCombat();
-        wolfStats[HYPER].name = "Hyper";
+        wolfStats[HYPER].name = "Eyr";
         wolfStats[HYPER].baseHP = 300;
         wolfStats[HYPER].currentHP = 300;
         wolfStats[HYPER].baseHunger = 100;

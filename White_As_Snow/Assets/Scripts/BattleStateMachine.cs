@@ -52,11 +52,10 @@ public class BattleStateMachine : MonoBehaviour
         WolvesInBattle.AddRange(GameObject.FindGameObjectsWithTag("wolf"));
         EnemiesInBattle.AddRange(GameObject.FindGameObjectsWithTag("enemy"));
 
-        foreach (GameObject wolf in WolvesInBattle)
-        {
-            WolvesOrderedByDataIndex.Add(wolf);
-        }
-        WolvesOrderedByDataIndex.Sort((x, y) => x.GetComponent<WolfStateMachine>().wolf.name.CompareTo(y.GetComponent<WolfStateMachine>().wolf.name));
+        WolvesOrderedByDataIndex.Add(GameObject.Find("Fen"));
+        WolvesOrderedByDataIndex.Add(GameObject.Find("Lycia"));
+        WolvesOrderedByDataIndex.Add(GameObject.Find("Eyr"));
+
 
         loadStats();
         WolfInput = WolfGUI.ACTIVATE;
