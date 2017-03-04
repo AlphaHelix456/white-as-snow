@@ -9,10 +9,8 @@ public class RevealImg : MonoBehaviour {
     public SpriteRenderer spriteRenderer;
     public float duration;
     public bool blocking = true;
-    private float timer;
     private bool isRunning;
 	void Start () {
-        timer = 0;
         isRunning = false;
         spriteRenderer.enabled = false;
 	}
@@ -22,8 +20,8 @@ public class RevealImg : MonoBehaviour {
         if (isRunning)
         {
             spriteRenderer.enabled = true;
-            timer += Time.deltaTime;
-            if(timer > duration)
+            duration -= Time.deltaTime;
+            if(duration < 0)
             {
                 spriteRenderer.enabled = false;
                 deleteSelf();

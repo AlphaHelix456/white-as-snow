@@ -11,12 +11,10 @@ public class RunAnimation : MonoBehaviour {
     public bool flipX = false;
     public float duration;
     public bool blocking = true;
-    private float timer;
     private bool isRunning;
     private Sprite originalSprite;
     void Start()
     {
-        timer = 0;
         isRunning = false;
         animator.enabled = false;
         originalSprite = spriteRenderer.sprite;
@@ -27,8 +25,8 @@ public class RunAnimation : MonoBehaviour {
     {
         if (isRunning)
         {
-            timer += Time.deltaTime;
-            if(timer > duration)
+            duration -= Time.deltaTime;
+            if(duration < 0)
             {
                 deleteSelf();
             }

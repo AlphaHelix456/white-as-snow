@@ -18,6 +18,9 @@ TagManager:
   - RevealImg
   - WaitFor
   - RunAnimation
+  - Fade
+  - UI
+  - Inventory
   layers:
   - Default
   - TransparentFX

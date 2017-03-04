@@ -11,13 +11,20 @@ public class CutsceneController : MonoBehaviour {
     private List<GameObject> cutsceneInstructions;
     private int currentCutscene;
     private int instructionsLength;
+    public bool debug = false;
+    private GameObject[] inventoryUI;
 	// Use this for initialization
 	void Start () {
         isRunning = false;
         isEnded = false;
+        inventoryUI = GameObject.FindGameObjectsWithTag("Inventory");
         cutsceneInstructions = new List<GameObject>();
         currentCutscene = -1;
-        //startCutscene(0);
+        if (debug)
+        {
+            startCutscene(0);
+        }
+        
 	}
 	
 	// Update is called once per frame
@@ -71,7 +78,13 @@ public class CutsceneController : MonoBehaviour {
                                 blocking = true;
                             }
                             break;
-
+                        case "Fade":
+                            cutsceneInstructions[index].GetComponent<FadeToBlack>().activate();
+                            if (cutsceneInstructions[index].GetComponent<FadeToBlack>().isBlocking())
+                            {
+                                blocking = true;
+                            }
+                            break;
                     }
                     index++;
                     if (blocking)
@@ -84,6 +97,7 @@ public class CutsceneController : MonoBehaviour {
             }
             else
             {
+                
                 endCutscene();
             }
         }
@@ -95,11 +109,19 @@ public class CutsceneController : MonoBehaviour {
         isEnded = false;
         currentCutscene = sceneNum;
         cutsceneInstructions = buildCutsceneInstructions(sceneNum);
+        for (int i = 0; i < inventoryUI.Length; i++)
+        {
+            inventoryUI[i].SetActive(false);
+        }
     }
     public void endCutscene()
     {
         isEnded = true;
         isRunning = false;
+        for (int i = 0; i < inventoryUI.Length; i++)
+        {
+            inventoryUI[i].SetActive(true);
+        }
     }
     public List<GameObject> buildCutsceneInstructions(int sceneNum)
     {

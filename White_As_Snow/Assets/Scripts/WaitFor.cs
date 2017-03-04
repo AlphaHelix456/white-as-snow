@@ -7,20 +7,20 @@ public class WaitFor : MonoBehaviour {
     // Use this for initialization
     public float duration;
     public bool blocking = true;
-    private float timer;
+
     private bool isRunning;
     
 	void Start () {
         isRunning = false;
-        timer = 0;
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (isRunning)
         {
-            timer += Time.deltaTime;
-            if(timer > duration)
+            duration -= Time.deltaTime;
+            if(duration < 0)
             {
                 deleteSelf();
             }
