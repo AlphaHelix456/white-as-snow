@@ -13,6 +13,7 @@ public class WolfMovement : MonoBehaviour {
 
     void Start () {
         rb = gameObject.GetComponent<Rigidbody2D>();
+		footsteps = gameObject.GetComponent<AudioSource> ();
 	}
 	
 	void FixedUpdate () {
@@ -28,7 +29,6 @@ public class WolfMovement : MonoBehaviour {
             facingup = false;
         }
         else {
-            isMoving = false;
             rb.velocity = new Vector2(rb.velocity.x, 0);
         }
         if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
@@ -44,11 +44,12 @@ public class WolfMovement : MonoBehaviour {
             facingup = false;
         }
         else {
-            isMoving = false;
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
+		if (rb.velocity.x == 0 && rb.velocity.y == 0)
+			isMoving = false;
 
-        if(isMoving == true) {
+        if(isMoving) {
             footsteps.enabled = true;
             footsteps.loop = true;
         }

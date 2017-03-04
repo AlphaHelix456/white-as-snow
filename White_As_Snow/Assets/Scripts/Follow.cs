@@ -14,14 +14,17 @@ public class Follow : MonoBehaviour
     private GameObject player;
     private GameObject otherFollower;
     private Rigidbody2D rb;
+	private AudioSource footsteps;
 
     private bool needsToMove;
     private bool adjusting;
     private float angle;
     private bool[] dirs = new bool[4]; //Directions, where left=0, right=1, up=2, down=3
+	private bool isMoving;
 
     void Start()
     {
+		footsteps = gameObject.GetComponent<AudioSource> ();
         player = GameObject.Find("wolf");
         needsToMove = false;
         adjusting = false;
@@ -38,6 +41,16 @@ public class Follow : MonoBehaviour
 
     void FixedUpdate()
     {
+		if (isMoving) {
+			footsteps.enabled = true;
+			footsteps.loop = true;
+		} 
+		else 
+		{
+			footsteps.enabled = false;
+			footsteps.loop = false;
+			
+		}
         if (adjusting)
         {
             if (getDist(otherFollower) >= MIN_D_SOFT)
@@ -49,6 +62,7 @@ public class Follow : MonoBehaviour
             }
             else
             {
+				isMoving = true;
                 angleSeparate();
             }
         }
@@ -72,6 +86,7 @@ public class Follow : MonoBehaviour
                 //Movement in direction of player
                 if (isClosest() || getDist(otherFollower) > MIN_D)
                 {
+					isMoving = true;
                     if (dirs[0])
                         rb.velocity = new Vector2(-SPEED, rb.velocity.y);
                     else if (dirs[1])

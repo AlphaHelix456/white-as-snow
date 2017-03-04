@@ -16,6 +16,7 @@ public class RunAnimation : MonoBehaviour {
     void Start()
     {
         isRunning = false;
+		animator = gameObject.GetComponent<Animator> ();
         animator.enabled = false;
         originalSprite = spriteRenderer.sprite;
     }
