@@ -7,8 +7,8 @@ public class Follow : MonoBehaviour
 
     private readonly float START_D = 6.5f;
     private readonly float STOP_D = 5f; //When the wolves will stop walking
-    private readonly float MIN_D = 2.5f; //Wolves must stay at least this distance apart
-    private readonly float MIN_D_SOFT = 3.3f; //Followers will try to stay at least this far apart when walking
+    private readonly float MIN_D = 3.1f; //Wolves must stay at least this distance apart
+    private readonly float MIN_D_SOFT = 3.9f; //Followers will try to stay at least this far apart when walking
     private float SPEED = 5.3f;
 
     private GameObject player;
@@ -18,12 +18,10 @@ public class Follow : MonoBehaviour
     private bool needsToMove;
     private bool adjusting;
     private float angle;
-    private bool[][] dirs = new bool[2][]; //Directions, where left=0, right=1, up=2, down=3
+    private bool[] dirs = new bool[4]; //Directions, where left=0, right=1, up=2, down=3
 
     void Start()
     {
-        for (int i = 0; i < 2; i++)
-            dirs[i] = new bool[4];
         player = GameObject.Find("wolf");
         needsToMove = false;
         adjusting = false;
@@ -45,7 +43,9 @@ public class Follow : MonoBehaviour
             if (getDist(otherFollower) >= MIN_D_SOFT)
             {
                 adjusting = false;
-                rb.velocity = new Vector2(0, 0);
+                SPEED = 5.3f;
+                if(!needsToMove)
+                    rb.velocity = new Vector2(0, 0);
             }
             else
             {
@@ -66,32 +66,34 @@ public class Follow : MonoBehaviour
             }
             else
             {
-                dirs[0] = walkDir(player);
-                dirs[1] = walkDir(otherFollower);
+                dirs = walkDir(player);
 
                 //Left=0, right=1, up=2, down=3
                 //Movement in direction of player
                 if (isClosest() || getDist(otherFollower) > MIN_D)
                 {
-                    if (dirs[0][0])
+                    if (dirs[0])
                         rb.velocity = new Vector2(-SPEED, rb.velocity.y);
-                    else if (dirs[0][1])
+                    else if (dirs[1])
                         rb.velocity = new Vector2(SPEED, rb.velocity.y);
                     else
                         rb.velocity = new Vector2(0, rb.velocity.y);
-                    if (dirs[0][2])
+                    if (dirs[2])
                         rb.velocity = new Vector2(rb.velocity.x, SPEED);
-                    else if (dirs[0][3])
+                    else if (dirs[3])
                         rb.velocity = new Vector2(rb.velocity.x, -SPEED);
                     else
                         rb.velocity = new Vector2(rb.velocity.x, 0);
                 }
                 else
                 {
-                    rb.velocity = new Vector2(0, 0);
                     otherFollower.SendMessage("adjust");
                 }
             }
+        }
+        else if(true)
+        {
+
         }
     }
 
@@ -203,6 +205,7 @@ public class Follow : MonoBehaviour
     private void adjust()
     {
         adjusting = true;
+        SPEED = 5.32f;
     }
 
     private void angleSeparate()
