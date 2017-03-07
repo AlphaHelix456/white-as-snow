@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c00d9d81e7837f49a3df3a162aedc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveName: Dive
-  moveDescription: Dive in front of an ally wolf, taking their next instance of damage.
+  moveName: Protect
+  moveDescription: Protect an ally wolf, taking their next instance of damage.
   moveValue: 500
+  allyTargeted: 1

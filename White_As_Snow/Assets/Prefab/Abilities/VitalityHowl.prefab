@@ -53,5 +53,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: Vitality
   moveDescription: Heal target wolf for a small amount.
-  moveValue: 200
+  moveValue: 25
   allyTargeted: 1
