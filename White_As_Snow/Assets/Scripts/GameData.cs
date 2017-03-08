@@ -73,7 +73,6 @@ public class GameData : MonoBehaviour {
         wolfStats[HYPER].baseCRIT = 0;
         wolfStats[HYPER].currentCRIT = 0;
 
-        gameProgress = OVERWORLD_0;
         inventory = new Inventory(new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 });
         triggerDict = new Dictionary<int, List<bool>>();
 

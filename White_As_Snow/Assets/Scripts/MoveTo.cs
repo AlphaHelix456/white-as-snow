@@ -12,6 +12,8 @@ public class MoveTo : MonoBehaviour {
     private float speed;
     private Vector3 directionVector;
     private bool isRunning;
+    public bool constantVelocity = false;
+    public float velocity = 0;
 	void Start () {
         if(duration == 0)
         {
@@ -19,6 +21,10 @@ public class MoveTo : MonoBehaviour {
         } else
         {
             speed = Vector3.Distance(objectToMove.position, destination.position) / duration;
+        }
+        if (constantVelocity)
+        {
+            speed = velocity;
         }
         directionVector = (destination.position - objectToMove.position).normalized;
 
@@ -70,6 +76,10 @@ public class MoveTo : MonoBehaviour {
             else
             {
                 speed = Vector3.Distance(objectToMove.position, destination.position) / duration;
+            }
+            if (constantVelocity)
+            {
+                speed = velocity;
             }
         }
         
