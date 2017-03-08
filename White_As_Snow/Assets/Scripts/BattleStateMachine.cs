@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class BattleStateMachine : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class BattleStateMachine : MonoBehaviour
         TAKEACTION,
         PERFORMACTION
     }
+
 
     public PerformAction battleStates;
 
@@ -42,6 +44,18 @@ public class BattleStateMachine : MonoBehaviour
     private CombatUIController CombatUI;
     public GameObject initSelector;
 
+    public enum WinLose
+    {
+        INPROGRESS,
+        FINISHING,
+        COMPLETE
+    }
+
+    public WinLose currentGame;
+
+    private AudioSource audioVictory;
+    private AudioSource audioDefeat;
+
     // Use this for initialization
     void Start()
     {
@@ -56,14 +70,18 @@ public class BattleStateMachine : MonoBehaviour
         WolvesOrderedByDataIndex.Add(GameObject.Find("Lycia"));
         WolvesOrderedByDataIndex.Add(GameObject.Find("Eyr"));
 
+        audioVictory = AddAudio((AudioClip)Resources.Load("Audio/WANO-FULL-LEADS-[AudioTrimmer.com]"), false, false, 1f);
+        audioDefeat = AddAudio((AudioClip)Resources.Load("Defeat"), false, false, 1f);
 
         loadStats();
         WolfInput = WolfGUI.ACTIVATE;
+        currentGame = WinLose.INPROGRESS;
     }
 
     // Update is called once per frame
     void Update()
     {
+        checkDeaths();
         switch (battleStates)
         {
             case (PerformAction.WAIT):
@@ -147,6 +165,29 @@ public class BattleStateMachine : MonoBehaviour
                     break;
                 }
         }
+        switch (currentGame)
+        {
+            case (WinLose.INPROGRESS):
+                {
+                    if (EnemiesInBattle.Count == 0)
+                    {
+                        audioVictory.Play();
+                        StartCoroutine(victorySequence());
+                        currentGame = WinLose.COMPLETE;
+                    }
+                    else if (WolvesOrderedByDataIndex[0].GetComponent<WolfStateMachine>().currentState == WolfStateMachine.TurnState.DEAD) 
+                    {
+                        audioDefeat.Play();
+                        StartCoroutine(defeatSequence());
+                        currentGame = WinLose.COMPLETE;
+                    }
+                    break;
+                }
+            case (WinLose.COMPLETE):
+                {
+                    break;
+                }
+        }
 
     }
     public void CollectActions(HandleTurns input) //When a unit's StateMachine issues an input, add it to global list of queued actions
@@ -193,5 +234,38 @@ public class BattleStateMachine : MonoBehaviour
             WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.baseCRIT = currentData.baseCRIT;
             WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentCRIT = currentData.currentCRIT;
         }
+    }
+    void checkDeaths()
+    {
+        if (EnemiesInBattle.Count == 0)
+        {
+            StartCoroutine(victorySequence());
+        }
+        else if (WolvesInBattle.Count == 0)
+        {
+            StartCoroutine(defeatSequence());
+        }
+    }
+    IEnumerator victorySequence()
+    {
+        yield return new WaitForSeconds(6.5f);
+        SceneManager.LoadScene("World");
+    }
+    IEnumerator defeatSequence()
+    {
+        //Will eventually fade into a "Retry Battle?" canvas. 
+        yield return new WaitForSeconds(6.5f);
+        SceneManager.LoadScene("World");
+    }
+    public AudioSource AddAudio(AudioClip clip, bool loop, bool playAwake, float vol)
+    {
+        AudioSource newAudio = gameObject.AddComponent<AudioSource>();
+
+        newAudio.clip = clip;
+        newAudio.loop = loop;
+        newAudio.playOnAwake = playAwake;
+        newAudio.volume = vol;
+
+        return newAudio;
     }
 }

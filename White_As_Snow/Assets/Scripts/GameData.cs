@@ -38,8 +38,8 @@ public class GameData : MonoBehaviour {
         wolfStats[ALPHA].currentATK = 50;
         wolfStats[ALPHA].baseDEF = 15;
         wolfStats[ALPHA].currentDEF = 15;
-        wolfStats[ALPHA].baseSPD = 4;
-        wolfStats[ALPHA].currentSPD = 4;
+        wolfStats[ALPHA].baseSPD = 7;
+        wolfStats[ALPHA].currentSPD = 7;
         wolfStats[ALPHA].baseCRIT = 0;
         wolfStats[ALPHA].currentCRIT = 0;
 
@@ -53,8 +53,8 @@ public class GameData : MonoBehaviour {
         wolfStats[CAUTION].currentATK = 50;
         wolfStats[CAUTION].baseDEF = 10;
         wolfStats[CAUTION].currentDEF = 10;
-        wolfStats[CAUTION].baseSPD = 7;
-        wolfStats[CAUTION].currentSPD = 7;
+        wolfStats[CAUTION].baseSPD = 12;
+        wolfStats[CAUTION].currentSPD = 12;
         wolfStats[CAUTION].baseCRIT = 0;
         wolfStats[CAUTION].currentCRIT = 0;
 
@@ -68,8 +68,8 @@ public class GameData : MonoBehaviour {
         wolfStats[HYPER].currentATK = 50;
         wolfStats[HYPER].baseDEF = 10;
         wolfStats[HYPER].currentDEF = 10;
-        wolfStats[HYPER].baseSPD = 3;
-        wolfStats[HYPER].currentSPD = 3;
+        wolfStats[HYPER].baseSPD = 6;
+        wolfStats[HYPER].currentSPD = 6;
         wolfStats[HYPER].baseCRIT = 0;
         wolfStats[HYPER].currentCRIT = 0;
 

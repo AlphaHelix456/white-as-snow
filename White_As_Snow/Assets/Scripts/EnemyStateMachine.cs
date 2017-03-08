@@ -86,7 +86,6 @@ public class EnemyStateMachine : MonoBehaviour {
                     this.gameObject.GetComponent<SpriteRenderer>().color = new Color32(105, 105, 105, 255);
 
                     alive = false;
-                    StartCoroutine(EndingSequence());
 
                 }
                 break;
@@ -200,12 +199,5 @@ public class EnemyStateMachine : MonoBehaviour {
     {
         float calc_damage = enemy.currentATK + BSM.PerformList[0].chosenMove.moveValue;
         WolfToAttack.GetComponent<WolfStateMachine>().takeDamage(calc_damage);
-    }
-    IEnumerator EndingSequence()
-    {
-        BSM.GetComponent<AudioSource>().Play();
-        yield return new WaitForSeconds(6.5f);
-        SceneManager.LoadScene("World");
-
     }
 }

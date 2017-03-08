@@ -153,8 +153,10 @@ public class CombatUIController : MonoBehaviour {
                 }
                 row = 0;
             }
+            setItemTooltips();
         }
-        if (menuState == CHOOSE_ATTACK) //Handles tooltips for abilities.
+
+        else if (menuState == CHOOSE_ATTACK) //Handles tooltips for abilities.
             setAbilityTooltips();
         else if (menuState == CHOOSE_TARGET) //Handles tooltips for enemies.
             setEnemyTooltips();
@@ -299,10 +301,6 @@ public class CombatUIController : MonoBehaviour {
 
 
         }
-        else
-        {
-
-        }
     }
     public void pickFriendlyAbilityTarget()
     {
@@ -342,12 +340,19 @@ public class CombatUIController : MonoBehaviour {
             useInventoryItem(inventorySlot, int.Parse(eventSystem.currentSelectedGameObject.name.Substring(15)));
             eventSystem.SetSelectedGameObject(null);
 
-            BSM.WolfInput = BattleStateMachine.WolfGUI.DONE;
-            //Ensure that this ends in the performlist being updated in WolfStateMachine
+            //Move does NOT go to a PerformList. Heals and moves on.
+            BSM.WolfInput = BattleStateMachine.WolfGUI.ACTIVATE;
+
+            //Manual cleanup of move because it does not go into a PerformList
+            BSM.WolvesToManage[0].GetComponent<WolfStateMachine>().cur_cooldown = 0;
+            BSM.WolvesToManage[0].GetComponent<WolfStateMachine>().currentState = WolfStateMachine.TurnState.PROCESSING;
+            BSM.WolvesToManage[0].transform.FindChild("selector").gameObject.SetActive(false); //Indicator disappears in-game
+            BSM.WolvesToManage.RemoveAt(0); //Cycle into the next wolf's input handling
+            BSM.WolfInput = BattleStateMachine.WolfGUI.ACTIVATE;
+            BSM.battleStates = BattleStateMachine.PerformAction.WAIT;
 
             updateButtons();
             AttackPanel.SetActive(false);
-
 
         }
         else
@@ -455,8 +460,6 @@ public class CombatUIController : MonoBehaviour {
             default:
                 throw new System.ArgumentException("ITEM_ID NOT VALID ITEM");
         }
-        
-
     }
     public void updateButtons()
     {
@@ -465,6 +468,9 @@ public class CombatUIController : MonoBehaviour {
         leftUIButtons[1].tag = "Untagged";
         leftUIButtons[2].tag = "Untagged";
         leftUIButtons[3].tag = "Untagged";
+
+        int alliesAvail;
+        int buttonIndex;
         //leftUIMessage.enabled = false;
         switch (menuState)
         {
@@ -512,18 +518,29 @@ public class CombatUIController : MonoBehaviour {
                 leftUIText[3].text = "";
                 displayInventory(); 
                 break;
+                
             case CHOOSE_ITEM_TARGET:
-                leftUIText[0].text = "Alpha";
-                leftUIText[1].text = "Caution";
-                leftUIText[2].text = "Hyper";
-                leftUIText[3].text = "Back";
-                leftUIButtons[3].tag = "Back";
-                setNumOptions(4);
+                alliesAvail = BSM.WolvesInBattle.Count;
+                buttonIndex = 0;
+                foreach (GameObject wolf in BSM.WolvesInBattle)
+                {
+                    leftUIText[buttonIndex].text = wolf.GetComponent<WolfStateMachine>().wolf.name;
+                    buttonIndex++;
+                }
+
+                for (int i = 0; i < 4 - alliesAvail; i++)
+                {
+                    leftUIText[i + alliesAvail].text = "";
+                }
+                leftUIText[alliesAvail].text = "Back";
+                leftUIButtons[alliesAvail].tag = "Back";
+                setNumOptions(alliesAvail + 1);
                 break;
+
             case CHOOSE_FRIENDLY_TARGET:
                 //Similar to CHOOSE_ITEM_TARGET but the current wolf can't be selected.
-                int alliesAvail = BSM.WolvesInBattle.Count - 1;
-                int buttonIndex = 0;
+                alliesAvail = BSM.WolvesInBattle.Count - 1;
+                buttonIndex = 0;
                 foreach (GameObject wolf in BSM.WolvesInBattle)
                 {
                     if (wolf.GetComponent<WolfStateMachine>().wolf.name != BSM.WolvesToManage[0].GetComponent<WolfStateMachine>().wolf.name)
@@ -539,7 +556,7 @@ public class CombatUIController : MonoBehaviour {
                 }
                 leftUIText[alliesAvail].text = "Back";
                 leftUIButtons[alliesAvail].tag = "Back";
-                setNumOptions(3);
+                setNumOptions(alliesAvail + 1);
                 break;
             case NOT_PLAYER_TURN:
                 leftUIText[0].text = "";
@@ -557,7 +574,7 @@ public class CombatUIController : MonoBehaviour {
 
         int itemID = inventory.get(itemToUse);
         //WolfCombat wolf = wolfStats[wolfSelected];
-        WolfStateMachine wolf = BSM.WolvesOrderedByDataIndex[wolfSelected].GetComponent<WolfStateMachine>();
+        WolfStateMachine wolf = BSM.WolvesInBattle[wolfSelected].GetComponent<WolfStateMachine>();
         switch (itemID)
         {
             case NO_ITEM:
@@ -610,6 +627,9 @@ public class CombatUIController : MonoBehaviour {
 
     void setEnemyTooltips()
     {
+        rightUITooltip.gameObject.SetActive(true);
+        rightUIText[0].gameObject.SetActive(false);
+        rightUIText[1].gameObject.SetActive(false);
         for (int i = 0; i < BSM.EnemiesInBattle.Count; i++)
         {
             if (eventSystem.currentSelectedGameObject == leftUIButtons[i])
@@ -653,6 +673,9 @@ public class CombatUIController : MonoBehaviour {
 
     void setFriendlyTooltips()
     {
+        rightUITooltip.gameObject.SetActive(true);
+        rightUIText[0].gameObject.SetActive(false);
+        rightUIText[1].gameObject.SetActive(false);
         for (int i = 0; i < BSM.WolvesOrderedByDataIndex.Count; i++)
         {
             if (eventSystem.currentSelectedGameObject == leftUIButtons[i])
@@ -660,17 +683,47 @@ public class CombatUIController : MonoBehaviour {
                 string wolfName = leftUIText[i].text;
                 if (wolfName.Equals("Fen"))
                 {
-                    rightUITooltip.text = "Your tired leader";
+                    rightUITooltip.text = "A leader";
                 }
                 if (wolfName.Equals("Eyr"))
                 {
-                    rightUITooltip.text = "Your energetic friend";
+                    rightUITooltip.text = "An energetic friend";
                 }
                 if (wolfName.Equals("Lycia"))
                 {
-                    rightUITooltip.text = "Your patient friend";
+                    rightUITooltip.text = "A cautious friend";
                 }
             }
         }
     }
+    void setItemTooltips()
+    {
+        rightUITooltip.gameObject.SetActive(true);
+        rightUIText[0].gameObject.SetActive(false);
+        rightUIText[1].gameObject.SetActive(false);
+        for (int i = 0; i < 4; i++)
+        {
+            if (eventSystem.currentSelectedGameObject == leftUIButtons[i])
+            {
+                string itemName = leftUIText[i].text;
+                if (itemName.Equals("Fox Meat"))
+                {
+                    rightUITooltip.text = "From your second kill. Small heal";
+                }
+                if (itemName.Equals("Elk Meat"))
+                {
+                    rightUITooltip.text = "From your first kill. Moderate heal";
+                }
+                if (itemName.Equals("Squirrel Meat"))
+                {
+                    rightUITooltip.text = "From a previous hunt. Small heal";
+                }
+            }
+        }
+        if (eventSystem.currentSelectedGameObject.tag == "Back")
+        {
+            rightUITooltip.text = "Return to previous screen";
+        }
+    }
+
 }

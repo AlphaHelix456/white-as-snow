@@ -20,7 +20,7 @@ public class WolfStateMachine : MonoBehaviour {
     }
     public TurnState currentState;
 
-    private float cur_cooldown = 0f;
+    public float cur_cooldown = 0f;
     private float max_cooldown = 5f;
     private float max_size = 1f; //largest size the ATB gague should grow to
 
@@ -124,7 +124,6 @@ public class WolfStateMachine : MonoBehaviour {
     }
     private IEnumerator TimeForAction()
     {
-        print(wolf.name);
         if (actionStarted)
         {
             yield break;
@@ -190,7 +189,14 @@ public class WolfStateMachine : MonoBehaviour {
         }
         else
         {
-            StartCoroutine(HitFrame());
+            if (wolf.currentDEF == 9000) //If Fen is currently blocking 
+            {
+                BSM.WolvesOrderedByDataIndex[0].GetComponent<WolfStateMachine>().takeDamage(incomingDamage);
+            }
+            else
+            {
+                StartCoroutine(HitFrame());
+            }
         }
         UpdateHealthBar();
     }
@@ -210,7 +216,7 @@ public class WolfStateMachine : MonoBehaviour {
         BSM.battleStates = BattleStateMachine.PerformAction.WAIT;
         actionStarted = false;
 
-        //reset this wolf's state and ATB gague 
+        //reset this wolf's state and ATB gauge 
         cur_cooldown = 0f;
         currentState = TurnState.PROCESSING;
     }
