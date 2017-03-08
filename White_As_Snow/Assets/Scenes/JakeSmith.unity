@@ -1272,6 +1272,7 @@ MonoBehaviour:
     currentCRIT: 20
     availableAttacks:
     - {fileID: 114012717983528658, guid: df923e903b207974e892ddd0b9d836ed, type: 2}
+    - {fileID: 114573100339016132, guid: 5e44ef7d6f65e1d408611e6ff47e5952, type: 2}
   currentState: 0
   waitBar: {fileID: 0}
   healthBar: {fileID: 0}
@@ -1580,7 +1581,11 @@ MonoBehaviour:
   - {fileID: 1112318813}
   - {fileID: 391396855}
   - {fileID: 140347762}
+  rightUIText:
+  - {fileID: 1242674765}
+  - {fileID: 449154313}
   leftUIMessage: {fileID: 219941604}
+  rightUITooltip: {fileID: 1935955041}
   whiteImg: {fileID: 21300000, guid: 93dcfa0a4d1ecaf49aaf77ed6f59afcf, type: 3}
   emptyImg: {fileID: 21300000, guid: c0f713c95aa653147b3bbd590e2379fc, type: 3}
   menuState: 0
@@ -2047,7 +2052,7 @@ MonoBehaviour:
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
+    m_MinSize: 14
     m_MaxSize: 40
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -4147,7 +4152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1935955040
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4163,8 +4168,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 28, y: -21.208}
-  m_SizeDelta: {x: 84, y: 27.311}
+  m_AnchoredPosition: {x: 29.3, y: -27.1}
+  m_SizeDelta: {x: 81.8, y: 23.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1935955041
 MonoBehaviour:
@@ -4191,14 +4196,16 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 12
-    m_MaxSize: 40
+    m_MaxSize: 24
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tooltip
+  m_Text: 'Tooltip
+
+'
 --- !u!222 &1935955042
 CanvasRenderer:
   m_ObjectHideFlags: 0

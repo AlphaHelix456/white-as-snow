@@ -10,8 +10,10 @@ public class CombatUIController : MonoBehaviour {
     public GameObject[] leftUIButtons;
     public GameObject[] rightUIButtons;
     public Text[] leftUIText;
+    public Text[] rightUIText;
     
     public Text leftUIMessage;
+    public Text rightUITooltip;
     public Sprite whiteImg;
     public Sprite emptyImg;
     private Inventory inventory;
@@ -151,11 +153,23 @@ public class CombatUIController : MonoBehaviour {
                 }
                 row = 0;
             }
-            if (menuState == chooseAttack)
-            {
-
-            }
         }
+        if (menuState == CHOOSE_ATTACK) //Handles tooltips for abilities.
+            setAbilityTooltips();
+        else if (menuState == CHOOSE_TARGET) //Handles tooltips for enemies.
+            setEnemyTooltips();
+        
+        else if (menuState == CHOOSE_FRIENDLY_TARGET | menuState == CHOOSE_ITEM_TARGET) //Handles tooltips for wolf descriptions.
+        {
+            setFriendlyTooltips();
+        }
+        else
+        {
+            rightUITooltip.gameObject.SetActive(false);
+            rightUIText[0].gameObject.SetActive(true);
+            rightUIText[1].gameObject.SetActive(true);
+        }
+
 
     }
     public void startTurn(string wolfName)
@@ -572,7 +586,89 @@ public class CombatUIController : MonoBehaviour {
         }
 
         inventory.removeItem(itemToUse);
-        wolf.endMove();
+    }
+    void setAbilityTooltips()
+    {
+        rightUITooltip.gameObject.SetActive(true);
+        rightUIText[0].gameObject.SetActive(false);
+        rightUIText[1].gameObject.SetActive(false);
 
+        for (int i = 0; i < BSM.WolvesToManage[0].GetComponent<WolfStateMachine>().wolf.availableAttacks.Count; i++)
+        {
+            if (eventSystem.currentSelectedGameObject == leftUIButtons[i])
+            {
+                rightUITooltip.text = BSM.WolvesToManage[0].GetComponent<WolfStateMachine>().wolf.availableAttacks[i].moveDescription;
+            }
+        }
+        if (eventSystem.currentSelectedGameObject.tag == "Back")
+        {
+            rightUITooltip.text = "Return to previous screen";
+        }
+    }
+
+    void setEnemyTooltips()
+    {
+        for (int i = 0; i < BSM.EnemiesInBattle.Count; i++)
+        {
+            if (eventSystem.currentSelectedGameObject == leftUIButtons[i])
+            {
+                string enemyName = BSM.EnemiesInBattle[i].GetComponent<EnemyStateMachine>().enemy.name;
+                if (enemyName.Equals("Elk"))
+                {
+                    rightUITooltip.text = "A slow elk";
+                }
+                if (enemyName.Equals("Fox"))
+                {
+                    rightUITooltip.text = "A quick brown fox";
+                }
+                if (enemyName.Equals("Bear"))
+                {
+                    rightUITooltip.text = "A disgruntled bear";
+                }
+                if (enemyName.Equals("Mammoth"))
+                {
+                    rightUITooltip.text = "A mammoth infused with ice";
+                }
+                if (enemyName.Equals("Spirit"))
+                {
+                    rightUITooltip.text = "The harvester of ice";
+                }
+                if (enemyName.Equals("Eyr"))
+                {
+                    rightUITooltip.text = "Your starving and energetic old friend";
+                }
+                if (enemyName.Equals("Lycia"))
+                {
+                    rightUITooltip.text = "Your starving and patient old friend";
+                }
+            }
+        }
+        if (eventSystem.currentSelectedGameObject.tag == "Back")
+        {
+            rightUITooltip.text = "Return to previous screen";
+        }
+    }
+
+    void setFriendlyTooltips()
+    {
+        for (int i = 0; i < BSM.WolvesOrderedByDataIndex.Count; i++)
+        {
+            if (eventSystem.currentSelectedGameObject == leftUIButtons[i])
+            {
+                string wolfName = leftUIText[i].text;
+                if (wolfName.Equals("Fen"))
+                {
+                    rightUITooltip.text = "Your tired leader";
+                }
+                if (wolfName.Equals("Eyr"))
+                {
+                    rightUITooltip.text = "Your energetic friend";
+                }
+                if (wolfName.Equals("Lycia"))
+                {
+                    rightUITooltip.text = "Your patient friend";
+                }
+            }
+        }
     }
 }

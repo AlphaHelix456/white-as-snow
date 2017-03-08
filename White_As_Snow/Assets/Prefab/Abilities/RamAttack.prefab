@@ -52,5 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveName: Ram
-  moveDescription: Charge a single enemy, dealing damage.
+  moveDescription: Charge a single enemy, dealing damage
   moveValue: 50
+  allyTargeted: 0

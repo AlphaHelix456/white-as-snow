@@ -52,6 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveName: Protect
-  moveDescription: Protect an ally wolf, taking their next instance of damage.
+  moveDescription: Protect an ally wolf, taking their next instance of damage
   moveValue: 500
   allyTargeted: 1

@@ -124,6 +124,7 @@ public class WolfStateMachine : MonoBehaviour {
     }
     private IEnumerator TimeForAction()
     {
+        print(wolf.name);
         if (actionStarted)
         {
             yield break;
