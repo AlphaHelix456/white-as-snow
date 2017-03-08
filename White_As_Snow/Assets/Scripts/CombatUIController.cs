@@ -297,6 +297,7 @@ public class CombatUIController : MonoBehaviour {
             updateButtons();
             AttackPanel.SetActive(false);
 
+
         }
         else
         {
@@ -342,6 +343,7 @@ public class CombatUIController : MonoBehaviour {
             eventSystem.SetSelectedGameObject(null);
 
             BSM.WolfInput = BattleStateMachine.WolfGUI.DONE;
+            //Ensure that this ends in the performlist being updated in WolfStateMachine
 
             updateButtons();
             AttackPanel.SetActive(false);
