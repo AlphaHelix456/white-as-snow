@@ -21,6 +21,7 @@ TagManager:
   - Fade
   - UI
   - Inventory
+  - SwapSprite
   layers:
   - Default
   - TransparentFX

@@ -6,7 +6,7 @@ public class RunAnimation : MonoBehaviour {
 
     // Use this for initialization
     public Animator animator;
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     public string animationName;
     public bool flipX = false;
     public float duration;
@@ -15,8 +15,8 @@ public class RunAnimation : MonoBehaviour {
     private Sprite originalSprite;
     void Start()
     {
+        spriteRenderer = animator.gameObject.GetComponent<SpriteRenderer>();
         isRunning = false;
-		animator = gameObject.GetComponent<Animator> ();
         animator.enabled = false;
         originalSprite = spriteRenderer.sprite;
     }

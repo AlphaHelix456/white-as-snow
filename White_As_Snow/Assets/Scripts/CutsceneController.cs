@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class CutsceneController : MonoBehaviour {
 
 
@@ -12,26 +12,34 @@ public class CutsceneController : MonoBehaviour {
     private int currentCutscene;
     private int instructionsLength;
     public bool debug = false;
-    private GameObject[] inventoryUI;
+    private GameData gameData;
+    
 	// Use this for initialization
 	void Start () {
         isRunning = false;
         isEnded = false;
-        inventoryUI = GameObject.FindGameObjectsWithTag("Inventory");
         cutsceneInstructions = new List<GameObject>();
         currentCutscene = -1;
         if (debug)
         {
             startCutscene(0);
         }
-        
-	}
+        gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+        if (gameData == null)
+        {
+            print("GameData not found");
+        }
+        startCutscene((int)(gameData.getGameProgress()/2));
+    }
 	
 	// Update is called once per frame
 	void Update () {
         if(isRunning)
         {
-            
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                endCutscene();
+            }
 
             if (cutsceneInstructions.Count > 0)
             {
@@ -84,6 +92,10 @@ public class CutsceneController : MonoBehaviour {
                                 blocking = true;
                             }
                             break;
+                        case "SwapSprite":
+                            cutsceneInstructions[index].GetComponent<SwapSprite>().activate();
+                            //SwapSprite doesn't have duration, so it can't block
+                            break;
                     }
                     index++;
                     if (blocking)
@@ -108,19 +120,13 @@ public class CutsceneController : MonoBehaviour {
         isEnded = false;
         currentCutscene = sceneNum;
         cutsceneInstructions = buildCutsceneInstructions(sceneNum);
-        for (int i = 0; i < inventoryUI.Length; i++)
-        {
-            inventoryUI[i].SetActive(false);
-        }
+        
     }
     public void endCutscene()
     {
         isEnded = true;
         isRunning = false;
-        for (int i = 0; i < inventoryUI.Length; i++)
-        {
-            inventoryUI[i].SetActive(true);
-        }
+        SceneManager.LoadScene("World");
     }
     public List<GameObject> buildCutsceneInstructions(int sceneNum)
     {
