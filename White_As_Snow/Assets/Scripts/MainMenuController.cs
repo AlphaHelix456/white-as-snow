@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour {
     {
         //Runs when start button is pressed; switches to game scene
 
-        SceneManager.LoadScene("World");
+        SceneManager.LoadScene("Cutscenes");
     }
     public void quitGame()
     {

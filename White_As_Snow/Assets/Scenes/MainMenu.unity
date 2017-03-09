@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &5309399
 MonoBehaviour:
@@ -160,7 +160,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &45042303
 MonoBehaviour:
@@ -243,7 +243,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &297721246
 MonoBehaviour:
@@ -708,7 +708,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -813,7 +813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &439583973
 MonoBehaviour:
@@ -834,7 +834,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1074,7 +1074,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1100,7 +1100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &606895427
 GameObject:
@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &619053122
 MonoBehaviour:
@@ -1364,7 +1364,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1555,7 +1555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1029907784}
-  speed: 200
+  speed: 230
   cam: {fileID: 807011003}
 --- !u!1 &700931948
 GameObject:
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &700931951
 MonoBehaviour:
@@ -1626,7 +1626,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1688,7 +1688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &718319486
 MonoBehaviour:
@@ -1709,7 +1709,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1771,7 +1771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &775431919
 MonoBehaviour:
@@ -1792,7 +1792,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1854,7 +1854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &802544165
 MonoBehaviour:
@@ -1875,7 +1875,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2093,7 +2093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &839712047
 MonoBehaviour:
@@ -2114,7 +2114,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2214,6 +2214,7 @@ MonoBehaviour:
   - {fileID: 21300012, guid: 0bac6b5b1bde115469bfaa70898a977e, type: 3}
   - {fileID: 21300014, guid: 0bac6b5b1bde115469bfaa70898a977e, type: 3}
   animationSpeed: 0.16
+  isRunning: 1
 --- !u!1 &854567887
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,7 +2747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &1083076558
 MonoBehaviour:
@@ -2767,7 +2768,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2976,7 +2977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &1185357333
 MonoBehaviour:
@@ -2997,7 +2998,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3170,7 +3171,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3196,7 +3197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1260982360
 GameObject:
@@ -3253,7 +3254,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3279,7 +3280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1274788523
 GameObject:
@@ -6059,7 +6060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &1361126475
 MonoBehaviour:
@@ -6080,7 +6081,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6142,7 +6143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &1415473913
 MonoBehaviour:
@@ -6163,7 +6164,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6200,7 +6201,7 @@ RectTransform:
   m_GameObject: {fileID: 1425897501}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 1.0000005}
+  m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
   - {fileID: 1083076556}
   - {fileID: 45042301}
@@ -6217,8 +6218,8 @@ RectTransform:
   m_Father: {fileID: 1753687627}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.35}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0, y: 0.45}
+  m_AnchorMax: {x: 1, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6270,7 +6271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &1450749770
 MonoBehaviour:
@@ -6291,7 +6292,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6442,7 +6443,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6468,7 +6469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1480425537
 GameObject:
@@ -6518,7 +6519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &1480425540
 MonoBehaviour:
@@ -6539,7 +6540,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6788,7 +6789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &1540211743
 MonoBehaviour:
@@ -6809,7 +6810,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6934,7 +6935,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6960,7 +6961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1651930021
 GameObject:
@@ -7046,7 +7047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &1653230391
 MonoBehaviour:
@@ -7067,7 +7068,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7136,7 +7137,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7162,7 +7163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1712316854
 GameObject:
@@ -7252,7 +7253,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7278,7 +7279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1753687626
 GameObject:
@@ -7377,7 +7378,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7403,7 +7404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1819938354
 GameObject:
@@ -7441,6 +7442,48 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1823388604
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4736098670319204, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 184.12622
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736098670319204, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 43.956734
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736098670319204, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736098670319204, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736098670319204, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736098670319204, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736098670319204, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736098670319204, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 3fa14bf116fe9c24eacb5535044c7062, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1825157260
 GameObject:
   m_ObjectHideFlags: 0
@@ -7583,7 +7626,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7609,7 +7652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1880303462
 GameObject:
@@ -7659,7 +7702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &1880303465
 MonoBehaviour:
@@ -7680,7 +7723,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7742,7 +7785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &1901487783
 MonoBehaviour:
@@ -7763,7 +7806,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7825,7 +7868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 815746314}
-  speed: 175
+  speed: 100
   cam: {fileID: 807011003}
 --- !u!114 &1904187629
 MonoBehaviour:
@@ -7846,7 +7889,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15dc85dc374c04123b79cc22c2d70b47, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7915,7 +7958,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7941,7 +7984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!1 &1942301376
 GameObject:
@@ -8098,7 +8141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1029907784}
-  speed: 200
+  speed: 230
   cam: {fileID: 807011003}
 --- !u!114 &1965796322
 MonoBehaviour:
@@ -8214,7 +8257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}
 --- !u!114 &1986223887
 MonoBehaviour:
@@ -8235,7 +8278,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -8302,6 +8345,7 @@ MonoBehaviour:
   - {fileID: 21300008, guid: f1371afcfac122e49a7f30c411f778cc, type: 3}
   - {fileID: 21300010, guid: f1371afcfac122e49a7f30c411f778cc, type: 3}
   animationSpeed: 0.16
+  isRunning: 1
 --- !u!222 &2001403640
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8457,6 +8501,7 @@ MonoBehaviour:
   - {fileID: 21300014, guid: c0f1833e43fd6894eb709a65253b427d, type: 3}
   - {fileID: 21300008, guid: c0f1833e43fd6894eb709a65253b427d, type: 3}
   animationSpeed: 0.16
+  isRunning: 1
 --- !u!1 &2120148735
 GameObject:
   m_ObjectHideFlags: 0
@@ -8545,7 +8590,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74d78d775e298144ca25f4e16a8d9976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f464fbc7fd5664dfb84c4ddb07e9ae55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -8571,5 +8616,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeTarget: {fileID: 1848652266}
-  speed: 180
+  speed: 200
   cam: {fileID: 807011003}

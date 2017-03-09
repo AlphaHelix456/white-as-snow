@@ -60,6 +60,10 @@ public class BattleStateMachine : MonoBehaviour
     void Start()
     {
         gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+        if(gameData == null)
+        {
+            print("No gameData found");
+        }
         CombatUI = GameObject.Find("CombatUIController").GetComponent<CombatUIController>();
 
         battleStates = PerformAction.WAIT;
@@ -249,7 +253,8 @@ public class BattleStateMachine : MonoBehaviour
     IEnumerator victorySequence()
     {
         yield return new WaitForSeconds(6.5f);
-        SceneManager.LoadScene("World");
+        gameData.setGameProgress(gameData.getGameProgress() + 1);
+        SceneManager.LoadScene("Cutscenes");
     }
     IEnumerator defeatSequence()
     {
