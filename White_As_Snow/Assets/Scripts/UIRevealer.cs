@@ -24,7 +24,7 @@ public class UIRevealer : MonoBehaviour {
          * 
          * Major resizing of the game window WILL break this 
          * */
-        
+
         if (GetComponent<Image>() != null && !GetComponent<Image>().enabled)
         {
             //You can disable the Image component of any UI element with a UIRevealer
@@ -41,15 +41,15 @@ public class UIRevealer : MonoBehaviour {
             }
             else if (anchorDirection == "Down")
             {
-                transform.position += Vector3.down * gameObject.GetComponent<RectTransform>().anchorMax.y * Screen.height ;
+                transform.position += Vector3.down * gameObject.GetComponent<RectTransform>().anchorMax.y * Screen.height;
             }
             else if (anchorDirection == "Left")
             {
-                transform.position += Vector3.left * gameObject.GetComponent<RectTransform>().anchorMax.x * Screen.width  ;
+                transform.position += Vector3.left * gameObject.GetComponent<RectTransform>().anchorMax.x * Screen.width;
             }
             else if (anchorDirection == "Right")
             {
-                transform.position += Vector3.right * (1-gameObject.GetComponent<RectTransform>().anchorMin.x) * Screen.width  ;
+                transform.position += Vector3.right * (1 - gameObject.GetComponent<RectTransform>().anchorMin.x) * Screen.width;
             }
             else
             {
@@ -58,7 +58,7 @@ public class UIRevealer : MonoBehaviour {
 
         }
 
-        hiddenPosition = getHiddenPosition();  
+        hiddenPosition = getHiddenPosition();
         moving = false;
         if (revealOnLoad)  //UI element spawns offscreen and begins revealing instantly
         {
@@ -71,7 +71,7 @@ public class UIRevealer : MonoBehaviour {
 
     void Update() {
 
-        
+
         if (revealed && moving)
         {
             moveToLocation(revealedPosition);
@@ -89,14 +89,14 @@ public class UIRevealer : MonoBehaviour {
             {
                 revealUI();
             }
-            
+
         }
     }
     public void moveToLocation(Vector3 target)
     {
         //moves towards location, snaps to location once close enough
-        transform.localPosition += (target - transform.localPosition) * (speedFactor/100f) * (1-Time.deltaTime);
-        if (Vector3.Distance(transform.localPosition, target) < 1)
+        transform.localPosition += (target - transform.localPosition) * (speedFactor / 100f) * (1 - Time.deltaTime);
+        if (Vector3.Distance(transform.localPosition, target) < 1 || speedFactor == 0)
         {
             moving = false;
             transform.localPosition = target;

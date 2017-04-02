@@ -11,6 +11,8 @@ public class MainMenuController : MonoBehaviour {
     private int menuState;
     private const int MAIN_MENU = 0;  //Use these constants to represent menustate more easily
     private const int CREDITS = 1;
+    public CreditsScript credits;
+    public EventSystem eventSystem;
     void Start () {
         menuState = MAIN_MENU;
 	}
@@ -34,11 +36,15 @@ public class MainMenuController : MonoBehaviour {
     {
         //Activates when credits is pressed, moves to credit screen
         menuState = CREDITS;
+        credits.revealCredits();
+        eventSystem.SetSelectedGameObject(GameObject.Find("BackButton"));
     }
     public void returnToMainMenu()
     {
         //Activates when the back button is pressed, returns to main menu screen
         menuState = MAIN_MENU;
+        credits.reset();
+        eventSystem.SetSelectedGameObject(GameObject.Find("StartButton"));
     }
 
     
