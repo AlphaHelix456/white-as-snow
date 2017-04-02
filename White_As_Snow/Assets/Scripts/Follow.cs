@@ -41,6 +41,7 @@ public class Follow : MonoBehaviour
 
     void FixedUpdate()
     {
+        /*
 		if (isMoving) {
 			footsteps.enabled = true;
 			footsteps.loop = true;
@@ -51,6 +52,7 @@ public class Follow : MonoBehaviour
 			footsteps.loop = false;
 			
 		}
+        */
         if (adjusting)
         {
             if (getDist(otherFollower) >= MIN_D_SOFT)

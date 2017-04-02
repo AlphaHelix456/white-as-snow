@@ -36,7 +36,7 @@ public class CutsceneController : MonoBehaviour {
 	void Update () {
         if(isRunning)
         {
-            if(Input.GetKeyDown(KeyCode.Escape))
+            if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
                 endCutscene();
             }

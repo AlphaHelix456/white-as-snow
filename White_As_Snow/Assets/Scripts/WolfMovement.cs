@@ -10,20 +10,21 @@ public class WolfMovement : MonoBehaviour {
     protected bool facingup = false;
     public AudioSource footsteps;
     private bool isMoving;
-
+    private InventoryMenuController inventory;
     void Start () {
         rb = gameObject.GetComponent<Rigidbody2D>();
 		footsteps = gameObject.GetComponent<AudioSource> ();
+        inventory = GameObject.Find("InventoryController").GetComponent<InventoryMenuController>();
 	}
 	
 	void FixedUpdate () {
         //Movement
-        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
+        if((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && !inventory.isOpen()) {
             isMoving = true;
             rb.velocity = new Vector2(rb.velocity.x, SPEED);
             facingup = true;
         }
-        else if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+        else if((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !inventory.isOpen()) {
             isMoving = true;
             rb.velocity = new Vector2(rb.velocity.x, -SPEED);
             facingup = false;
@@ -31,13 +32,13 @@ public class WolfMovement : MonoBehaviour {
         else {
             rb.velocity = new Vector2(rb.velocity.x, 0);
         }
-        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
+        if((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && !inventory.isOpen()) {
             isMoving = true;
             rb.velocity = new Vector2(SPEED, rb.velocity.y);
             facingright = true;
             facingup = false;
         }
-        else if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
+        else if((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && !inventory.isOpen()) {
             isMoving = true;
             rb.velocity = new Vector2(-SPEED, rb.velocity.y);
             facingright = false;
@@ -48,7 +49,7 @@ public class WolfMovement : MonoBehaviour {
         }
 		if (rb.velocity.x == 0 && rb.velocity.y == 0)
 			isMoving = false;
-
+        /*
         if(isMoving) {
             footsteps.enabled = true;
             footsteps.loop = true;
@@ -57,6 +58,7 @@ public class WolfMovement : MonoBehaviour {
             footsteps.enabled = false;
             footsteps.loop = false;
         }
+        */
     }
 }
    

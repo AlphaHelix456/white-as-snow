@@ -81,11 +81,7 @@ public class InventoryMenuController : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        if(eventSystem.currentSelectedGameObject != null)
-        {
-            print(eventSystem.currentSelectedGameObject.name);
 
-        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (menuState == NOT_IN_MENU)
@@ -246,5 +242,9 @@ public class InventoryMenuController : MonoBehaviour
         {
             itemDesc.GetComponent<Text>().text = wolfStats[wolfSelected].name + itemUseText[4];
         }
+    }
+    public bool isOpen()
+    {
+        return menuState != NOT_IN_MENU;
     }
 }
