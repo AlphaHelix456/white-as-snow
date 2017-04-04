@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0b30163ef00c1d342b96c2414abfc21d
+timeCreated: 1491110624
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Elementary Gothic Bookhand
+  fontNames:
+  - Elementary Gothic Bookhand
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
