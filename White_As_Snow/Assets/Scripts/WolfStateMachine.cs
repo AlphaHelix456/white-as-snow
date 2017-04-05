@@ -60,7 +60,14 @@ public class WolfStateMachine : MonoBehaviour {
         switch (currentState)
         {
             case (TurnState.PROCESSING):
-                UpdateProgressBar();
+                if (BSM.currentGame == BattleStateMachine.WinLose.COMPLETE)
+                {
+                    currentState = TurnState.WAITING;
+                }
+                else
+                {
+                    UpdateProgressBar();
+                }
                 break;
             case (TurnState.ADDTOLIST):
                 BSM.WolvesToManage.Add(this.gameObject);
@@ -98,7 +105,7 @@ public class WolfStateMachine : MonoBehaviour {
                         }
                     }
                     //change color / [later] play death animation to signify dead wolf
-                    this.gameObject.GetComponent<SpriteRenderer>().color = new Color32(105, 105, 105, 255);
+                    StartCoroutine(fadeToNothing());
                     //reset wolfinput
                     BSM.WolfInput = BattleStateMachine.WolfGUI.ACTIVATE;
                     alive = false;
@@ -247,6 +254,26 @@ public class WolfStateMachine : MonoBehaviour {
         {
             EnemyToAttack.GetComponent<WolfStateMachine>().receiveHealing(BSM.PerformList[0].chosenMove.moveValue);
         }
+    }
+
+    private IEnumerator fadeToNothing()
+    {
+        byte currentAlpha = 255;
+        while (currentAlpha > 0)
+        {
+            yield return new WaitForSeconds(.006f);
+            currentAlpha--;
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, currentAlpha);
+            foreach (Transform child in transform)
+            {
+                if (child.gameObject.GetComponent<SpriteRenderer>() != null)
+                {
+                    child.gameObject.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, currentAlpha);
+                }
+
+            }
+        }
+
     }
 }
 

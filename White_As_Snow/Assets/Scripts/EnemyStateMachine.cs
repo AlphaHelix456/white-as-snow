@@ -49,14 +49,20 @@ public class EnemyStateMachine : MonoBehaviour {
         switch (currentState)
         {
             case (TurnState.PROCESSING):
-                UpdateProgressBar();
+                if (BSM.currentGame == BattleStateMachine.WinLose.COMPLETE)
+                {
+                    currentState = TurnState.WAITING;
+                }
+                else
+                {
+                    UpdateProgressBar();
+                }
                 break;
             case (TurnState.CHOOSEACTION):
                 ChooseAction();
                 currentState = TurnState.WAITING;
                 break;
             case (TurnState.WAITING): //idle state
-
                 break;
         
             case (TurnState.ACTION):

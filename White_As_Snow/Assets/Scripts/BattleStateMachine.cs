@@ -52,6 +52,7 @@ public class BattleStateMachine : MonoBehaviour
     }
 
     public WinLose currentGame;
+    public Image blackScreen;
 
     private AudioSource audioVictory;
     private AudioSource audioDefeat;
@@ -65,6 +66,7 @@ public class BattleStateMachine : MonoBehaviour
             print("No gameData found");
         }
         CombatUI = GameObject.Find("CombatUIController").GetComponent<CombatUIController>();
+        blackScreen = GameObject.Find("DefeatScreen").GetComponent<Image>();
 
         battleStates = PerformAction.WAIT;
         WolvesInBattle.AddRange(GameObject.FindGameObjectsWithTag("wolf"));
@@ -85,7 +87,6 @@ public class BattleStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        checkDeaths();
         switch (battleStates)
         {
             case (PerformAction.WAIT):
@@ -175,15 +176,13 @@ public class BattleStateMachine : MonoBehaviour
                 {
                     if (EnemiesInBattle.Count == 0)
                     {
-                        audioVictory.Play();
-                        StartCoroutine(victorySequence());
                         currentGame = WinLose.COMPLETE;
+                        StartCoroutine(victorySequence());
                     }
                     else if (WolvesOrderedByDataIndex[0].GetComponent<WolfStateMachine>().currentState == WolfStateMachine.TurnState.DEAD) 
                     {
-                        audioDefeat.Play();
-                        StartCoroutine(defeatSequence());
                         currentGame = WinLose.COMPLETE;
+                        StartCoroutine(defeatSequence());
                     }
                     break;
                 }
@@ -239,29 +238,52 @@ public class BattleStateMachine : MonoBehaviour
             WolvesOrderedByDataIndex[i].GetComponent<WolfStateMachine>().wolf.currentCRIT = currentData.currentCRIT;
         }
     }
-    void checkDeaths()
-    {
-        if (EnemiesInBattle.Count == 0)
-        {
-            StartCoroutine(victorySequence());
-        }
-        else if (WolvesInBattle.Count == 0)
-        {
-            StartCoroutine(defeatSequence());
-        }
-    }
+
     IEnumerator victorySequence()
     {
+        audioVictory.Play();
+        AttackPanel.SetActive(false);
+
         yield return new WaitForSeconds(6.5f);
         gameData.setGameProgress(gameData.getGameProgress() + 1);
         SceneManager.LoadScene("Cutscenes");
     }
     IEnumerator defeatSequence()
     {
-        //Will eventually fade into a "Retry Battle?" canvas. 
-        yield return new WaitForSeconds(6.5f);
+        //Enemies no longer for new wolves to attack
+        //for (int i = 0; i < EnemiesInBattle.Count; i++)
+        //{
+        //    EnemiesInBattle[i].GetComponent<EnemyStateMachine>().currentState = EnemyStateMachine.TurnState.WAITING;
+        //}
+
+        //Audio plays and UI is cleaned up. BSM knows the game is complete.
+        audioDefeat.Play();
+        AttackPanel.SetActive(false);
+        currentGame = WinLose.COMPLETE;
+
+        //Fade into a black "Defeat" screen.
+        blackScreen.enabled = true;
+        Text defeatText = blackScreen.gameObject.transform.FindChild("DefeatText").gameObject.GetComponent<Text>();
+        defeatText.enabled = true;
+        byte alpha = 0;
+        byte defeatAlpha = 0;
+        while (alpha < 255)
+        {
+            yield return new WaitForSeconds(.015f);
+            alpha++;
+            blackScreen.color = new Color32(0, 0, 0, alpha);
+            if (alpha > 125 && defeatAlpha < 254) {
+                defeatAlpha += 2;
+                defeatText.enabled = true;
+                defeatText.color = new Color32(109, 0, 0, defeatAlpha);
+            }
+        }
+
+        //Return the user to the world after a few seconds.
+        yield return new WaitForSeconds(2.5f);
         SceneManager.LoadScene("World");
     }
+
     public AudioSource AddAudio(AudioClip clip, bool loop, bool playAwake, float vol)
     {
         AudioSource newAudio = gameObject.AddComponent<AudioSource>();
