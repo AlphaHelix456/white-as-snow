@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5fa22343014ed47a5edd522a9b6bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveName: Vitality
+  moveName: Heal Howl
   moveDescription: Heal target wolf for a small amount
-  moveValue: 25
+  moveValue: 35
   allyTargeted: 1

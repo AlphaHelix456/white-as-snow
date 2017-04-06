@@ -53,9 +53,13 @@ public class BattleStateMachine : MonoBehaviour
 
     public WinLose currentGame;
     public Image blackScreen;
+    public GameObject whiteScreen;
 
     private AudioSource audioVictory;
     private AudioSource audioDefeat;
+
+    private AudioSource audioEnemyIntro;
+    private AudioSource audioBattle;
 
     // Use this for initialization
     void Start()
@@ -68,6 +72,7 @@ public class BattleStateMachine : MonoBehaviour
         CombatUI = GameObject.Find("CombatUIController").GetComponent<CombatUIController>();
         blackScreen = GameObject.Find("DefeatScreen").GetComponent<Image>();
 
+
         battleStates = PerformAction.WAIT;
         WolvesInBattle.AddRange(GameObject.FindGameObjectsWithTag("wolf"));
         EnemiesInBattle.AddRange(GameObject.FindGameObjectsWithTag("enemy"));
@@ -77,9 +82,10 @@ public class BattleStateMachine : MonoBehaviour
         WolvesOrderedByDataIndex.Add(GameObject.Find("Eyr"));
 
         audioVictory = AddAudio((AudioClip)Resources.Load("Audio/WANO-FULL-LEADS-[AudioTrimmer.com]"), false, false, 1f);
-        audioDefeat = AddAudio((AudioClip)Resources.Load("Defeat"), false, false, 1f);
+        audioDefeat = AddAudio((AudioClip)Resources.Load("Audio/Defeat"), false, false, 1f);
 
         loadStats();
+        StartCoroutine(playIntro());
         WolfInput = WolfGUI.ACTIVATE;
         currentGame = WinLose.INPROGRESS;
     }
@@ -243,6 +249,9 @@ public class BattleStateMachine : MonoBehaviour
     {
         audioVictory.Play();
         AttackPanel.SetActive(false);
+        disableSelectors();
+        WolvesToManage.Clear();
+        PerformList.Clear();
 
         yield return new WaitForSeconds(6.5f);
         gameData.setGameProgress(gameData.getGameProgress() + 1);
@@ -250,15 +259,13 @@ public class BattleStateMachine : MonoBehaviour
     }
     IEnumerator defeatSequence()
     {
-        //Enemies no longer for new wolves to attack
-        //for (int i = 0; i < EnemiesInBattle.Count; i++)
-        //{
-        //    EnemiesInBattle[i].GetComponent<EnemyStateMachine>().currentState = EnemyStateMachine.TurnState.WAITING;
-        //}
-
         //Audio plays and UI is cleaned up. BSM knows the game is complete.
         audioDefeat.Play();
         AttackPanel.SetActive(false);
+        disableSelectors();
+        WolvesToManage.Clear();
+        PerformList.Clear();
+
         currentGame = WinLose.COMPLETE;
 
         //Fade into a black "Defeat" screen.
@@ -273,15 +280,39 @@ public class BattleStateMachine : MonoBehaviour
             alpha++;
             blackScreen.color = new Color32(0, 0, 0, alpha);
             if (alpha > 125 && defeatAlpha < 254) {
-                defeatAlpha += 2;
+                defeatAlpha += 3;
                 defeatText.enabled = true;
                 defeatText.color = new Color32(109, 0, 0, defeatAlpha);
             }
         }
+        yield return new WaitForSeconds(1f);
+        while (defeatAlpha > 0)
+        {
+            yield return new WaitForSeconds(.015f);
+            defeatAlpha -= 3;
+            defeatText.color = new Color32(109, 0, 0, defeatAlpha);
+        }
 
         //Return the user to the world after a few seconds.
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(.75f);
         SceneManager.LoadScene("World");
+    }
+
+    private IEnumerator playIntro()
+    {
+        whiteScreen.SetActive(true);
+        byte alpha = 255;
+        while (alpha > 0)
+        {
+            yield return new WaitForSeconds(0.008f);
+            alpha -= 3;
+            whiteScreen.GetComponent<Image>().color = new Color32(255, 255, 255, alpha);
+        } 
+        if (EnemiesInBattle[0].name == "Elk")
+        {
+            audioEnemyIntro = AddAudio((AudioClip)Resources.Load("Audio/elk_fightstart"), false, false, .8f);
+        }
+        audioEnemyIntro.Play();
     }
 
     public AudioSource AddAudio(AudioClip clip, bool loop, bool playAwake, float vol)
@@ -294,5 +325,28 @@ public class BattleStateMachine : MonoBehaviour
         newAudio.volume = vol;
 
         return newAudio;
+    }
+
+    public bool FrenzyReady()
+    {
+        for (int i = 0; i < EnemiesInBattle.Count; i++)
+        {
+            float currentHP = EnemiesInBattle[i].GetComponent<EnemyStateMachine>().enemy.currentHP;
+            float maxHP = EnemiesInBattle[i].GetComponent<EnemyStateMachine>().enemy.baseHP;
+            if (currentHP / maxHP <= .2)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void disableSelectors()
+    {
+        for (int i = 0; i < WolvesInBattle.Count; i++)
+        {
+            WolvesInBattle[i].transform.FindChild("selector").gameObject.SetActive(false);
+        }
+
     }
 }

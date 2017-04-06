@@ -24,6 +24,9 @@ public class CombatUIController : MonoBehaviour {
     private BattleStateMachine BSM;
     public GameObject AttackPanel;
 
+    private AudioSource audioMenuMove;
+    private AudioSource audioMenuSelect;
+
     private const int CHOOSE_ACTION = 0;
     private const int CHOOSE_ATTACK = 1;
     private const int CHOOSE_TARGET = 2;
@@ -54,7 +57,11 @@ public class CombatUIController : MonoBehaviour {
         menuState = CHOOSE_ACTION;
         inventory = new Inventory();
         gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
-        if(gameData == null)
+
+        audioMenuMove = AddAudio((AudioClip)Resources.Load("Audio/combat_menu_move"), false, false, .8f);
+        audioMenuSelect = AddAudio((AudioClip)Resources.Load("Audio/combat_menu_select"), false, false, .8f);
+
+        if (gameData == null)
         {
             print("GameData not found");
         }
@@ -106,71 +113,77 @@ public class CombatUIController : MonoBehaviour {
         {
             back();
         }
-        if (menuState == CHOOSE_ITEM)
+        if (BSM.currentGame == BattleStateMachine.WinLose.INPROGRESS)
         {
-            if (row == 0)
+            if (menuState == CHOOSE_ITEM)
             {
+                if (row == 0)
+                {
+                    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+                    {
+
+                        if (inventoryIndex >= 2)
+                        {
+                            inventoryIndex -= 2;
+                            updateButtons();
+                            playMenuMovementAudio();
+                        }
+                    }
+
+                }
+                else if (row == 1)
+                {
+                    if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                    {
+                        if (inventoryIndex <= inventory.size() - 4)
+                        {
+                            inventoryIndex += 2;
+                            updateButtons();
+                            playMenuMovementAudio();
+                        }
+                    }
+                }
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
-
-                    if (inventoryIndex >= 2)
+                    row = 0; //This fixes an issue where Unity would switch buttons, then run code to check what is the currently selected button afterwards
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                {
+                    row = 1;
+                }
+                if (eventSystem.currentSelectedGameObject.activeSelf == false)
+                {
+                    //Fixes case where moving down the inventory would place your pointer on a deactivated button
+                    if (eventSystem.currentSelectedGameObject == leftUIButtons[2])
                     {
-                        inventoryIndex -= 2;
-                        updateButtons();
+                        eventSystem.SetSelectedGameObject(leftUIButtons[0]);
                     }
-                }
-
-            }
-            else if (row == 1)
-            {
-                if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-                {
-                    if (inventoryIndex <= inventory.size()-4)
+                    else if (eventSystem.currentSelectedGameObject == leftUIButtons[3])
                     {
-                        inventoryIndex += 2;
-                        updateButtons();
+                        eventSystem.SetSelectedGameObject(leftUIButtons[1]);
                     }
+                    row = 0;
                 }
+                setItemTooltips();
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+
+            else if (menuState == CHOOSE_ATTACK) //Handles tooltips for abilities.
+                setAbilityTooltips();
+            else if (menuState == CHOOSE_TARGET) //Handles tooltips for enemies.
+                setEnemyTooltips();
+
+            else if (menuState == CHOOSE_FRIENDLY_TARGET | menuState == CHOOSE_ITEM_TARGET) //Handles tooltips for wolf descriptions.
             {
-                row = 0; //This fixes an issue where Unity would switch buttons, then run code to check what is the currently selected button afterwards
+                setFriendlyTooltips();
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            else
             {
-                row = 1;
+                rightUITooltip.gameObject.SetActive(false);
+                rightUIText[0].gameObject.SetActive(true);
+                rightUIText[1].gameObject.SetActive(true);
             }
-            if (eventSystem.currentSelectedGameObject.activeSelf == false)
-            {
-                //Fixes case where moving down the inventory would place your pointer on a deactivated button
-                if (eventSystem.currentSelectedGameObject == leftUIButtons[2])
-                {
-                    eventSystem.SetSelectedGameObject(leftUIButtons[0]);
-                }
-                else if (eventSystem.currentSelectedGameObject == leftUIButtons[3])
-                {
-                    eventSystem.SetSelectedGameObject(leftUIButtons[1]);
-                }
-                row = 0;
-            }
-            setItemTooltips();
         }
-
-        else if (menuState == CHOOSE_ATTACK) //Handles tooltips for abilities.
-            setAbilityTooltips();
-        else if (menuState == CHOOSE_TARGET) //Handles tooltips for enemies.
-            setEnemyTooltips();
         
-        else if (menuState == CHOOSE_FRIENDLY_TARGET | menuState == CHOOSE_ITEM_TARGET) //Handles tooltips for wolf descriptions.
-        {
-            setFriendlyTooltips();
-        }
-        else
-        {
-            rightUITooltip.gameObject.SetActive(false);
-            rightUIText[0].gameObject.SetActive(true);
-            rightUIText[1].gameObject.SetActive(true);
-        }
 
 
     }
@@ -196,6 +209,9 @@ public class CombatUIController : MonoBehaviour {
         lastSelectedRightButton = eventSystem.currentSelectedGameObject;
         eventSystem.SetSelectedGameObject(leftUIButtons[0]);
         leftUIMessage.enabled = false;
+
+        audioMenuSelect.Play();
+
     }
     public void itemPress()
     {
@@ -205,6 +221,9 @@ public class CombatUIController : MonoBehaviour {
         lastSelectedRightButton = eventSystem.currentSelectedGameObject;
         eventSystem.SetSelectedGameObject(leftUIButtons[0]);
         leftUIMessage.enabled = false;
+
+        audioMenuSelect.Play();
+
     }
     public void optionPress()
     {
@@ -224,6 +243,8 @@ public class CombatUIController : MonoBehaviour {
                 chooseAttack(2);
             else if (eventSystem.currentSelectedGameObject.CompareTag("Attack 3"))
                 chooseAttack(3);
+            else if (eventSystem.currentSelectedGameObject.CompareTag("Disabled"))
+            { }
             else 
                 chooseAttack(999);
         }
@@ -240,6 +261,8 @@ public class CombatUIController : MonoBehaviour {
         {
             pickFriendlyAbilityTarget();
         }
+        audioMenuSelect.Play();
+
 
     }
     public void chooseAttack(int attackIndex)
@@ -469,6 +492,9 @@ public class CombatUIController : MonoBehaviour {
         leftUIButtons[2].tag = "Untagged";
         leftUIButtons[3].tag = "Untagged";
 
+        //Resets color after the Frenzy check
+        leftUIText[1].color = new Color32(255, 255, 255, 255);
+
         int alliesAvail;
         int buttonIndex;
         //leftUIMessage.enabled = false;
@@ -618,6 +644,20 @@ public class CombatUIController : MonoBehaviour {
             {
                 rightUITooltip.text = BSM.WolvesToManage[0].GetComponent<WolfStateMachine>().wolf.availableAttacks[i].moveDescription;
             }
+
+            //Handle if Hyper's Frenzy is ready
+            if (BSM.WolvesToManage[0].GetComponent<WolfStateMachine>().wolf.availableAttacks[i].moveName == "Frenzy")
+            {
+                if (BSM.FrenzyReady())
+                {
+                    leftUIText[1].color = new Color32(255, 63, 63, 255);
+                }
+                else
+                {
+                    leftUIButtons[1].tag = "Disabled";
+                    leftUIText[1].color = new Color32(30, 30, 30, 255);
+                }
+            }
         }
         if (eventSystem.currentSelectedGameObject.tag == "Back")
         {
@@ -724,6 +764,23 @@ public class CombatUIController : MonoBehaviour {
         {
             rightUITooltip.text = "Return to previous screen";
         }
+    }
+
+    public void playMenuMovementAudio()
+    {
+        audioMenuMove.Play();
+
+    }
+    public AudioSource AddAudio(AudioClip clip, bool loop, bool playAwake, float vol)
+    {
+        AudioSource newAudio = gameObject.AddComponent<AudioSource>();
+
+        newAudio.clip = clip;
+        newAudio.loop = loop;
+        newAudio.playOnAwake = playAwake;
+        newAudio.volume = vol;
+
+        return newAudio;
     }
 
 }

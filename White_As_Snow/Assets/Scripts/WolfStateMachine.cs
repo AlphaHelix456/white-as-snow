@@ -35,6 +35,10 @@ public class WolfStateMachine : MonoBehaviour {
     private Vector3 startPosition;
     private float animSpeed = 10f;
 
+    //Sound effects
+    private AudioSource audioWolfReady;
+    private AudioSource audioWolfDeath;
+
     //Wolf death
     private bool alive = true;
 
@@ -53,6 +57,10 @@ public class WolfStateMachine : MonoBehaviour {
         UpdateHealthBar();
 
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
+
+        audioWolfReady = BSM.AddAudio((AudioClip)Resources.Load("Audio/wolf_ready"), false, false, .9f);
+        audioWolfDeath = BSM.AddAudio((AudioClip)Resources.Load("Audio/wolf_death"), false, false, .9f);
+
         currentState = TurnState.PROCESSING;
     }
 
@@ -71,6 +79,7 @@ public class WolfStateMachine : MonoBehaviour {
                 break;
             case (TurnState.ADDTOLIST):
                 BSM.WolvesToManage.Add(this.gameObject);
+                audioWolfReady.Play();
                 currentState = TurnState.WAITING;
                 break;
             case (TurnState.WAITING):
@@ -106,6 +115,7 @@ public class WolfStateMachine : MonoBehaviour {
                     }
                     //change color / [later] play death animation to signify dead wolf
                     StartCoroutine(fadeToNothing());
+                    audioWolfDeath.Play();
                     //reset wolfinput
                     BSM.WolfInput = BattleStateMachine.WolfGUI.ACTIVATE;
                     alive = false;
@@ -217,7 +227,10 @@ public class WolfStateMachine : MonoBehaviour {
     public void endMove()
     {
         //remove this attacker from the BSM list
-        BSM.PerformList.RemoveAt(0);
+        if (BSM.PerformList.Count > 0)
+        {
+            BSM.PerformList.RemoveAt(0);
+        }
 
         //reset BSM -> Wait
         BSM.battleStates = BattleStateMachine.PerformAction.WAIT;
@@ -273,7 +286,11 @@ public class WolfStateMachine : MonoBehaviour {
 
             }
         }
+    }
 
+    public void playWolfReady()
+    {
+        audioWolfReady.Play();
     }
 }
 

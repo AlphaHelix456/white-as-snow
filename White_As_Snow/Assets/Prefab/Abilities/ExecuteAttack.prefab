@@ -52,6 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveName: Execute
-  moveDescription: Lethal strike
+  moveDescription: Finish off a low health enemy
   moveValue: 10000000
   allyTargeted: 0

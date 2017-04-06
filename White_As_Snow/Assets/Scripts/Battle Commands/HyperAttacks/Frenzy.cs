@@ -9,5 +9,7 @@ public class Frenzy : BaseAttack {
         moveDescription = "Multi-hit claw that has a chance to crit ";
         moveValue = 15f;
     }
+
+
 	
 }

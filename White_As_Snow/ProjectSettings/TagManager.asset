@@ -22,6 +22,7 @@ TagManager:
   - UI
   - Inventory
   - SwapSprite
+  - Disabled
   layers:
   - Default
   - TransparentFX

@@ -119,7 +119,7 @@ RectTransform:
   - {fileID: 538967495}
   - {fileID: 1413915316}
   m_Father: {fileID: 1438591196}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0}
   m_AnchorMax: {x: 0.85, y: 0.2}
@@ -1543,7 +1543,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2001,7 +2001,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1438591196}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2689,11 +2689,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.22650175
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.6497732
+      value: 0.51
       objectReference: {fileID: 0}
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3696,6 +3696,7 @@ GameObject:
   - component: {fileID: 916860560}
   - component: {fileID: 916860559}
   - component: {fileID: 916860558}
+  - component: {fileID: 916860561}
   m_Layer: 0
   m_Name: SelectionArrowL0
   m_TagString: Untagged
@@ -3807,6 +3808,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 916860556}
+--- !u!114 &916860561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 916860556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 775151404}
+          m_MethodName: playMenuMovementAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &939601372
 GameObject:
   m_ObjectHideFlags: 0
@@ -4080,7 +4111,7 @@ RectTransform:
   m_Children:
   - {fileID: 1152973748}
   m_Father: {fileID: 1438591196}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4298,7 +4329,7 @@ MonoBehaviour:
     baseDEF: 10
     currentDEF: 10
     baseSPD: 8
-    currentSPD: 2
+    currentSPD: 8
     baseCRIT: 10
     currentCRIT: 10
     availableAttacks:
@@ -4306,6 +4337,7 @@ MonoBehaviour:
   currentState: 0
   healthBar: {fileID: 0}
   WolfToAttack: {fileID: 0}
+  audioEnemyDeath: {fileID: 0}
 --- !u!212 &1137960369
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4515,6 +4547,7 @@ GameObject:
   - component: {fileID: 1162320045}
   - component: {fileID: 1162320044}
   - component: {fileID: 1162320043}
+  - component: {fileID: 1162320046}
   m_Layer: 0
   m_Name: SelectionArrowL3
   m_TagString: Untagged
@@ -4626,6 +4659,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1162320041}
+--- !u!114 &1162320046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1162320041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 775151404}
+          m_MethodName: playMenuMovementAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1177196031
 GameObject:
   m_ObjectHideFlags: 0
@@ -4794,6 +4857,7 @@ MonoBehaviour:
   initSelector: {fileID: 1645546135}
   currentGame: 0
   blackScreen: {fileID: 0}
+  whiteScreen: {fileID: 1288800893}
 --- !u!4 &1208869052
 Transform:
   m_ObjectHideFlags: 0
@@ -4833,7 +4897,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1438591196}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5042,6 +5106,74 @@ SpriteRenderer:
   m_Color: {r: 0.78676474, g: 0.78676474, b: 0.78676474, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &1288800893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1288800894}
+  - component: {fileID: 1288800896}
+  - component: {fileID: 1288800895}
+  m_Layer: 5
+  m_Name: IntroFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1288800894
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1288800893}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1438591196}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1288800895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1288800893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1288800896
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1288800893}
 --- !u!1 &1327411696
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,11 +5252,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.20449385
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.7189671
+      value: 0.51
       objectReference: {fileID: 0}
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5512,6 +5644,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1288800894}
   - {fileID: 1056926860}
   - {fileID: 149358}
   - {fileID: 1216724818}
@@ -5535,6 +5668,7 @@ GameObject:
   - component: {fileID: 1466220248}
   - component: {fileID: 1466220247}
   - component: {fileID: 1466220246}
+  - component: {fileID: 1466220249}
   m_Layer: 0
   m_Name: SelectionArrowL1
   m_TagString: Untagged
@@ -5646,6 +5780,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1466220244}
+--- !u!114 &1466220249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1466220244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 775151404}
+          m_MethodName: playMenuMovementAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1474641846
 GameObject:
   m_ObjectHideFlags: 0
@@ -6161,6 +6325,7 @@ GameObject:
   - component: {fileID: 1645546138}
   - component: {fileID: 1645546137}
   - component: {fileID: 1645546136}
+  - component: {fileID: 1645546140}
   m_Layer: 0
   m_Name: SelectionArrowR0
   m_TagString: Untagged
@@ -6272,6 +6437,36 @@ RectTransform:
   m_AnchoredPosition: {x: -9.4, y: 0}
   m_SizeDelta: {x: 0, y: 0.0000038146973}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1645546140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1645546135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 775151404}
+          m_MethodName: playMenuMovementAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1664581946
 GameObject:
   m_ObjectHideFlags: 0
@@ -6761,6 +6956,7 @@ GameObject:
   - component: {fileID: 1848599117}
   - component: {fileID: 1848599116}
   - component: {fileID: 1848599115}
+  - component: {fileID: 1848599118}
   m_Layer: 0
   m_Name: SelectionArrowL2
   m_TagString: Untagged
@@ -6872,6 +7068,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1848599113}
+--- !u!114 &1848599118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1848599113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 775151404}
+          m_MethodName: playMenuMovementAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1856535454
 GameObject:
   m_ObjectHideFlags: 0
@@ -7018,6 +7244,7 @@ GameObject:
   - component: {fileID: 1884448783}
   - component: {fileID: 1884448782}
   - component: {fileID: 1884448781}
+  - component: {fileID: 1884448784}
   m_Layer: 0
   m_Name: SelectionArrowR1
   m_TagString: Untagged
@@ -7129,6 +7356,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1884448779}
+--- !u!114 &1884448784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1884448779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 775151404}
+          m_MethodName: playMenuMovementAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!4 &1901427582 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73,
@@ -7475,11 +7732,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.38216883
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.86155593
+      value: 0.51
       objectReference: {fileID: 0}
     - target: {fileID: 4948287490659982, guid: 9e98ce44f07082f48a20d79496fc4e73, type: 2}
       propertyPath: m_LocalPosition.z

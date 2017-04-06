@@ -30,6 +30,10 @@ public class EnemyStateMachine : MonoBehaviour {
     public GameObject WolfToAttack;
     private bool alive = true;
 
+    //Sound effects
+    public AudioSource audioEnemyDeath;
+
+
     //Speed to walk to the target
     private float animSpeed = 10f;
     
@@ -42,6 +46,9 @@ public class EnemyStateMachine : MonoBehaviour {
         currentState = TurnState.PROCESSING;
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         startPosition = transform.position;
+
+        audioEnemyDeath = BSM.AddAudio((AudioClip)Resources.Load("Audio/elk_death"), false, false, .8f);
+
     }
 
     // Update is called once per frame
@@ -90,6 +97,7 @@ public class EnemyStateMachine : MonoBehaviour {
                     }
                     //change color / [later] play death animation to signify dead enemy
                     this.gameObject.GetComponent<SpriteRenderer>().color = new Color32(105, 105, 105, 255);
+                    audioEnemyDeath.Play();
 
                     alive = false;
 
@@ -168,7 +176,10 @@ public class EnemyStateMachine : MonoBehaviour {
         }
 
         //remove this attacker from the BSM list
-        BSM.PerformList.RemoveAt(0);
+        if (BSM.PerformList.Count > 0)
+        {
+            BSM.PerformList.RemoveAt(0);
+        }
 
         //reset BSM -> Wait
         BSM.battleStates = BattleStateMachine.PerformAction.WAIT;
